@@ -1,0 +1,19 @@
+name: CD
+
+on:
+  push:
+    branches:
+      - releases/*
+  tags:
+      - v*
+
+jopbs:
+
+  hello:
+
+    runs-on: windows-latest
+    name: Hello
+    
+    steps:
+      - name: print
+        run: echo hello
