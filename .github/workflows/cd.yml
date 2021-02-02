@@ -6,6 +6,8 @@ on:
       - releases/*
     tags:
       - v*
+    paths:
+      - package.json
 
 jobs:
 
