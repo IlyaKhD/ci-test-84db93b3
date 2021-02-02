@@ -4,8 +4,6 @@ on:
   push:
     branches:
       - releases/*
-    tags:
-      - v*
     paths:
       - package.json
 
