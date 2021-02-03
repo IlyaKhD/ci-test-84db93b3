@@ -17,10 +17,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
         with:
-          fetch-depth: 0
+          fetch-depth: 2
 
       - name: Check
         run: git diff HEAD^ HEAD -U0 package.json | tail -n +6 | grep "^\+.*\"version\":" || exit 1
 
-        
-      
+      - name: Print
+        run: git branch
