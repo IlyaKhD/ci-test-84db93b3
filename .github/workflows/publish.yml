@@ -1,4 +1,4 @@
-name: CD
+name: Publish
 
 on:
   push:
@@ -14,5 +14,5 @@ jobs:
     
     steps:
       - name: print
-        run: echo hello
+        run: echo published
         
