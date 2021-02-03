@@ -4,8 +4,6 @@ on:
   push:
     branches:
       - releases/*
-    paths:
-      - package.json
 
 jobs:
 
