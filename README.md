@@ -6,3 +6,4 @@ one more line
 refactored line
 one more line
 and more
+more
