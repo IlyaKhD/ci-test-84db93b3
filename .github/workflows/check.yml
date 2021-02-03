@@ -17,8 +17,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Print
-        run: git log -1 --pretty=format:"%s"
+      - name: Check
+        run: git diff HEAD^ HEAD -U0 package.json | tail -n +6 | grep "^\+.*\"version\":" || exit 1
 
         
       
