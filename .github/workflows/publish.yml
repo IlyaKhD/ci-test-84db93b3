@@ -9,7 +9,7 @@ jobs:
 
   publishing:
 
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     name: Publish if Version Bumped
 
     steps:
