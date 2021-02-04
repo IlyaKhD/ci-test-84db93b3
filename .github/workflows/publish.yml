@@ -19,7 +19,7 @@ jobs:
         with:
           fetch-depth: 2
 
-      - name: Detect Version
+      - name: Check Version
         id: version
         uses: salsify/action-detect-and-tag-new-version@v2
 
