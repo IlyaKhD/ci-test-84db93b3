@@ -37,4 +37,4 @@ jobs:
     steps:
 
       - name: Publish
-        run: echo ${{ needs.version-check.outputs.changed }}
+        run: echo publishing
