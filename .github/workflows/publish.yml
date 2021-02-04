@@ -24,6 +24,8 @@ jobs:
       - name: Check version
         id: check
         uses: salsify/action-detect-and-tag-new-version@v2
+        with:
+          create-tag: false
 
   publishing:
 
