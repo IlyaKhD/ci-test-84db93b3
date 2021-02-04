@@ -34,7 +34,7 @@ jobs:
     steps:
 
       - name: Publish
-        if: needs.version-check.outputs.changed
+        if: ${{ needs.version-check.outputs.changed }}
         run: echo ${{ needs.version-check.outputs.changed }}
 
 
