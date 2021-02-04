@@ -22,7 +22,10 @@ jobs:
         id: version-check
         with:
           create-tag: false
-      
+
+      - name: Print
+        run: echo ${{ steps.version-check.outputs.current-version }}
+
       - name: Publish
         if: steps.version-check.outputs.previous-version == steps.version-check.outputs.current-version
         run: echo publishing...
