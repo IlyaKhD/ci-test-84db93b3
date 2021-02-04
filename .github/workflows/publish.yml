@@ -30,7 +30,7 @@ jobs:
       - name: Print
         env:
           PREV_VERSION: ${{ steps.version.outputs.current-version }}
-        run: echo ${{ PREV_VERSION }}
+        run: echo $PREV_VERSION
 
       - name: Dump GitHub context
         env:
