@@ -7,10 +7,12 @@ on:
 
 jobs:
 
-  publishing:
+  version-check:
 
     runs-on: ubuntu-latest
-    name: Publish if Version Bumped
+    name: Check Version
+    outputs:
+      changed: ${{ steps.check.outputs.previous-version != steps.check.outputs.current-version }}
 
     steps:
 
@@ -19,10 +21,20 @@ jobs:
         with:
           fetch-depth: 2
 
-      - name: Check Version
-        id: version
+      - name: Check version
+        id: check
         uses: salsify/action-detect-and-tag-new-version@v2
 
+  publishing:
+
+    name: Publish
+    needs: [ version-check ]
+    runs-on: windows-latest
+
+    steps:
+
       - name: Publish
-        if: steps.version.outputs.current-version != steps.version.outputs.previous-version
+        if: needs.version-check.outputs.changed
         run: echo Publishing...
+
+
