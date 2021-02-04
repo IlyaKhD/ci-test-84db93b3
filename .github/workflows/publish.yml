@@ -1,0 +1,28 @@
+name: Publish
+
+on:
+  push:
+    branches:
+      - releases/*
+
+jobs:
+
+  hello:
+
+    runs-on: windows-latest
+    name: Hello
+    
+    steps:
+
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 2
+
+      - uses: salsify/action-detect-and-tag-new-version@v2
+        id: version-check
+        with:
+          create-tag: false
+      
+      - name: Publish
+        if: steps.version-check.outputs.previous-version == steps.version-check.outputs.current-version
+        run: echo publishing...
