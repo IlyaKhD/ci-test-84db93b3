@@ -22,9 +22,15 @@ jobs:
       - name: Detect Version
         id: version
         uses: salsify/action-detect-and-tag-new-version@v2
-        
+
+      - name: Publish
+        if: steps.version.outputs.current-version == steps.version.outputs.previous-version
+        run: echo Publishing...
+
       - name: Print
-        run: echo ${{steps.version.outputs.current-version}}
+        env:
+          PREV_VERSION: ${{ steps.version.outputs.current-version }}
+        run: echo ${{ PREV_VERSION }}
 
       - name: Dump GitHub context
         env:
