@@ -30,7 +30,7 @@ jobs:
     name: Publish
     needs: [ version-check ]
     runs-on: windows-latest
-    if: needs.version-check.outputs.changed == true
+    if: needs.version-check.outputs.changed == 'true'
 
     steps:
 
