@@ -25,3 +25,6 @@ jobs:
         
       - name: Print
         run: echo ${{steps.version.outputs.current-version}}
+
+      - name: Print 2
+        run: echo ${{ <context> }}
