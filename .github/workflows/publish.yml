@@ -24,12 +24,13 @@ jobs:
         uses: salsify/action-detect-and-tag-new-version@v2
 
       - name: Publish
-        if: steps.version.outputs.current-version == steps.version.outputs.previous-version
+        if: steps.version.outputs.current-version != steps.version.outputs.previous-version
         run: echo Publishing...
 
       - name: Print
         env:
           PREV_VERSION: ${{ steps.version.outputs.current-version }}
+        if: $PREV_VERSION == $PREV_VERSION
         run: echo $PREV_VERSION
 
       - name: Dump GitHub context
