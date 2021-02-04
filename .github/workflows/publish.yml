@@ -9,24 +9,19 @@ jobs:
 
   publishing:
 
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     name: Publish if Version Bumped
-    
+
     steps:
 
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - name: Check out
+        uses: actions/checkout@v2
         with:
-          node-version: '12'
+          fetch-depth: 2
 
-      - name: Check if version has been updated
-        id: check
-        uses: EndBug/version-check@v1
-
-      - name: Log when changed
-        if: steps.check.outputs.changed == 'true'
-        run: 'echo "Version change found in commit ${{ steps.check.outputs.commit }}! New version: ${{ steps.check.outputs.version }} (${{ steps.check.outputs.type }})"'
-
-      - name: Log when unchanged
-        if: steps.check.outputs.changed == 'false'
-        run: 'echo "No version change :/"'
+      - name: Detect Version
+        id: version
+        uses: salsify/action-detect-and-tag-new-version@v2
+        
+      - name: Print
+        run: echo ${{steps.version.outputs.current-version}}
