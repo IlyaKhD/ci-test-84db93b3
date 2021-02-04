@@ -30,7 +30,7 @@ jobs:
       - name: Print
         env:
           PREV_VERSION: ${{ steps.version.outputs.current-version }}
-        if: PREV_VERSION == PREV_VERSION
+        if: ${{PREV_VERSION}} == ${{PREV_VERSION}}
         run: echo $PREV_VERSION
 
       - name: Dump GitHub context
