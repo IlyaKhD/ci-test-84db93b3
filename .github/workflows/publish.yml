@@ -30,11 +30,9 @@ jobs:
     name: Publish
     needs: [ version-check ]
     runs-on: windows-latest
+    if: needs.version-check.outputs.changed == true
 
     steps:
 
       - name: Publish
-        if: needs.version-check.outputs.changed == true
         run: echo ${{ needs.version-check.outputs.changed }}
-
-
