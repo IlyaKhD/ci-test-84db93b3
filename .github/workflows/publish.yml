@@ -9,7 +9,7 @@ jobs:
 
   hello:
 
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     name: Hello
     
     steps:
