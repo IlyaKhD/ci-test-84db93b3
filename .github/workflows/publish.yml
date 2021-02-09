@@ -3,7 +3,7 @@ name: Publish
 on:
   push:
     branches:
-      - releases/*
+      - "*"
 
 jobs:
 
@@ -14,15 +14,12 @@ jobs:
     
     steps:
 
-      - uses: actions/checkout@v2
+      - name: Set up Node
+        uses: actions/setup-node@v1
         with:
-          fetch-depth: 2
-
-      - uses: salsify/action-detect-and-tag-new-version@v2
-        id: version-check
-        with:
-          create-tag: false
-      
+          node-version: ${{ env.nodeVersion }}
+          
       - name: Publish
-        if: steps.version-check.outputs.previous-version == steps.version-check.outputs.current-version
-        run: echo publishing...
+        run: npm whoami
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
