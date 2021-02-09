@@ -22,17 +22,6 @@ jobs:
         with:
           node-version: ${{ env.nodeVersion }}
           
-      - name: Print
-        run: echo ${{ secrets.TEST_TOKEN2 }}
-
-      - name: Print 3
-        run: cat .npmrc
-        
-      - name: Print 2
-        run: echo ${TTT_TOKEN}
-        env:
-          TTT_TOKEN: ${{ secrets.TEST_TOKEN }}
-          
       - name: Publish
         run: npm whoami
         env:
