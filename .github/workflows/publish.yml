@@ -5,9 +5,6 @@ on:
     branches:
       - "*"
 
-env:
-  nodeVersion: 12.x
-
 jobs:
 
   hello:
@@ -20,7 +17,8 @@ jobs:
       - name: Set up Node
         uses: actions/setup-node@v2
         with:
-          node-version: ${{ env.nodeVersion }}
+          node-version: 12
+          registry-url: https://registry.npmjs.org/
           
       - name: Publish
         run: npm whoami
