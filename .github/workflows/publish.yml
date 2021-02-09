@@ -5,6 +5,9 @@ on:
     branches:
       - "*"
 
+env:
+  nodeVersion: 12.x
+
 jobs:
 
   hello:
