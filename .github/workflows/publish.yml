@@ -20,6 +20,6 @@ jobs:
           node-version: 12
           
       - name: Publish
-        run: npm dist-tag add devextreme-internal-tools@4.5.3 latest
+        run: npm dist-tag add devextreme-internal-tools@2.2.1 latest
         env:
-          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
