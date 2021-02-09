@@ -21,6 +21,6 @@ jobs:
           registry-url: https://registry.npmjs.org/
           
       - name: Publish
-        run: npm whoami
+        run: npm dist-tag add devextreme-internal-tools@4.5.3 latest
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
