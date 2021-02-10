@@ -18,8 +18,8 @@ jobs:
       - name: Print Count
         run: >
           echo ${{
-            (contains(github.event.pull_request.labels.*.name, 'internal') ? 1 : 0 ) +
-            (contains(github.event.pull_request.labels.*.name, 'patch') ? 1 : 0 ) +
-            (contains(github.event.pull_request.labels.*.name, 'minor') ? 1 : 0 ) +
-            (contains(github.event.pull_request.labels.*.name, 'major') ? 1 : 0 )
+            (contains(github.event.pull_request.labels.*.name, 'internal') && 1 || 0 ) +
+            (contains(github.event.pull_request.labels.*.name, 'patch') && 1 || 0 ) +
+            (contains(github.event.pull_request.labels.*.name, 'minor') && 1 || 0 ) +
+            (contains(github.event.pull_request.labels.*.name, 'major') && 1 || 0 )
           }}
