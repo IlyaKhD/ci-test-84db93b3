@@ -2,22 +2,18 @@ name: Check
 
 on:
   pull_request:
-    branches:
-      - '*'
+    types:
+      - labeled
+      - unlabeled
 
 jobs:
 
-  check-version:
+  check-semver-tag:
 
-    name: Check version bumped
+    name: Should have SemVer tag
     runs-on: ubuntu-latest
 
     steps:
-    
-      - name: Checkout
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: 2
 
-      - name: Check version
-        run: git diff HEAD^ HEAD -U0 package.json | tail -n +6 | grep "^\+.*\"version\":" || (echo "Version not bumped!" && exit 1)
+      - name: Check tag
+        run: echo ${{ join(github.event.pull_request.labels.*.name, ', ') }}
