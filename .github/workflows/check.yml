@@ -1,6 +1,7 @@
 name: Check
 
 on:
+  push:
   pull_request:
     types: 
       - opened
@@ -28,38 +29,6 @@ jobs:
             echo "PR must have one and only one tag of the following: internal, patch, minor, major. "
             exit 1
           fi
-          
-  version-check:
-
-    runs-on: ubuntu-latest
-    name: Check Version
-    outputs:
-      changed: ${{ steps.check.outputs.current-version != steps.check.outputs.previous-version }}
-      version: ${{ steps.check.outputs.current-version }}
-
-    steps:
-
-      - name: Checkout
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: 2
-
-      - name: Check version
-        id: check
-        uses: salsify/action-detect-and-tag-new-version@v2
-        with:
-          create-tag: false
-
-  publishing:
-
-    name: Publish
-    needs: [ version-check ]
-    runs-on: windows-latest
-    if: needs.version-check.outputs.changed == 'true'
-
-    steps:
-
-      - run: echo publishing      
 
   check-version-bump:
 
@@ -75,17 +44,7 @@ jobs:
       - name: Check version
         run: >
           versionBumped=$( git diff HEAD^ HEAD -U0 package.json | tail -n +6 | grep "^\+.*\"version\":" );
-          onlyOneLineChanged=$( git diff HEAD^ HEAD --shortstat | grep "1 *file *changed.*1 *insertion.*1 *deletion" );      
+          onlyOneLineChanged=$( git diff HEAD^ HEAD --shortstat | grep "1 *file *changed.*1 *insertion.*1 *deletion" );
           
-          if ! [[ versionBumped ]]; then
-            echo "Version not bumped"
-            exit 0
-          fi
-          
-          newVersion=$( echo $versionBumped | grep -oP "(?<=\")\d+\.\d+\.\d+(?=\")" )
-          
-          echo $newVersion
-          
-          if [[ onlyOneLineChanged ]]; then
-            echo "PR with version bump must have no other changes"
-          fi
+          echo test
+
