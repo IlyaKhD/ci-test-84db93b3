@@ -28,6 +28,38 @@ jobs:
             echo "PR must have one and only one tag of the following: internal, patch, minor, major. "
             exit 1
           fi
+          
+  version-check:
+
+    runs-on: ubuntu-latest
+    name: Check Version
+    outputs:
+      changed: ${{ steps.check.outputs.current-version != steps.check.outputs.previous-version }}
+      version: ${{ steps.check.outputs.current-version }}
+
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 2
+
+      - name: Check version
+        id: check
+        uses: salsify/action-detect-and-tag-new-version@v2
+        with:
+          create-tag: false
+
+  publishing:
+
+    name: Publish
+    needs: [ version-check ]
+    runs-on: windows-latest
+    if: needs.version-check.outputs.changed == 'true'
+
+    steps:
+
+      - run: echo publishing      
 
   check-version-bump:
 
