@@ -10,7 +10,7 @@ jobs:
 
   check-semver-tag:
 
-    name: Should have SemVer tag
+    name: PR must have SemVer label
     runs-on: ubuntu-latest
 
     steps:
