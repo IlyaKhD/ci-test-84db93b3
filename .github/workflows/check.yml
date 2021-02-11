@@ -22,4 +22,4 @@ jobs:
           MINOR:  ${{contains(github.event.pull_request.labels.*.name, 'minor') && 1 || ''}}
           MAJOR:  ${{contains(github.event.pull_request.labels.*.name, 'major') && 1 || ''}}
         run: >
-          [[1 -e  $((INTERNAL + PATCH + MINOR + MAJOR))]] && echo "correct" || echo "incorrect"
+          [1 -e  $INTERNAL + $PATCH + $MINOR + $MAJOR] && echo "correct" || echo "incorrect"
