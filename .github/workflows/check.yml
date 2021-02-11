@@ -51,7 +51,7 @@ jobs:
           errCount=0
           newVersion="$( echo $versionDiff | grep -oP "\+ *\"version\":.+," | grep -oP "\d+\.\d+.\d+" )"
           stat=$( git diff HEAD^ HEAD --shortstat )
-          echo 123
+
           if ! [[ "$stat" =~ (1 *file *changed.*1 *insertion.*1 *deletion) ]]
           then
             echo "PR with version bump must have no other changes"
