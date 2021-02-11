@@ -45,11 +45,11 @@ jobs:
 
       - name: Check version
         run: |
-          versionDiff=$( git diff HEAD^ HEAD -U0 package.json);
+          versionDiff="$( git diff HEAD^ HEAD -U0 package.json)"
           if ! [[ $versionDiff ]]; then exit 0; fi
 
           errCount=0
-          newVersion=$( echo $versionDiff | tail -n +6 | grep -oP "\+.*\"version\":.+," | grep -oP "\d+\.\d+.\d+" )
+          newVersion="$( echo $versionDiff | tail -n +6 | grep -oP "\+.*\"version\":.+," | grep -oP "\d+\.\d+.\d+" )"
           stat=$( git diff HEAD^ HEAD --shortstat )
 
           if ! [[ "$stat" =~ (1 *file *changed.*1 *insertion.*1 *deletion) ]]
