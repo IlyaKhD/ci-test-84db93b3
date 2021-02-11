@@ -16,7 +16,12 @@ jobs:
     steps:
 
       - name: Print Count
-        run: echo (${{contains(github.event.pull_request.labels.*.name, 'internal')}}${{contains(github.event.pull_request.labels.*.name, 'patch')}}${{contains(github.event.pull_request.labels.*.name, 'minor')}}${{contains(github.event.pull_request.labels.*.name, 'major')}})
+        env:
+          INTERNAL:  ${{contains(github.event.pull_request.labels.*.name, 'internal') && 1 || ''}}
+          PATCH:  ${{contains(github.event.pull_request.labels.*.name, 'patch') && 1 || ''}}
+          MINOR:  ${{contains(github.event.pull_request.labels.*.name, 'minor') && 1 || ''}}
+          MAJOR:  ${{contains(github.event.pull_request.labels.*.name, 'major') && 1 || ''}}
+        run: echo "$INTERNAL$PATCH$MINOR$MAJOR"
 
       - name: Check
         if: ('true' == (${{contains(github.event.pull_request.labels.*.name, 'internal')}}${{contains(github.event.pull_request.labels.*.name, 'patch')}}${{contains(github.event.pull_request.labels.*.name, 'minor')}}${{contains(github.event.pull_request.labels.*.name, 'major')}}))
