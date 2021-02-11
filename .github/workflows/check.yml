@@ -23,7 +23,7 @@ jobs:
         run: >
           if [ $((INTERNAL + PATCH + MINOR + MAJOR)) -ne 1 ]
             then
-              echo "incorrect"
+              echo "PR must have one and only one tag of the following: internal, patch, minor, major. "
               exit 1
           fi
 
@@ -36,6 +36,6 @@ jobs:
         run: >
           if [ $((INTERNAL + PATCH + MINOR + MAJOR)) -ne 1 ]
           then
-              echo "PR must have one and only one tag of the following: internal, patch, minor, major. ";
-              exit 1;
+              echo "PR must have one and only one tag of the following: internal, patch, minor, major. "
+              exit 1
           fi
