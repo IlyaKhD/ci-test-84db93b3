@@ -17,9 +17,9 @@ jobs:
 
       - name: Print Count
         env:
-          INTERNAL:  ${{contains(github.event.pull_request.labels.*.name, 'internal') && 1 || ''}}
-          PATCH:  ${{contains(github.event.pull_request.labels.*.name, 'patch') && 1 || ''}}
-          MINOR:  ${{contains(github.event.pull_request.labels.*.name, 'minor') && 1 || ''}}
-          MAJOR:  ${{contains(github.event.pull_request.labels.*.name, 'major') && 1 || ''}}
+          INTERNAL:  ${{contains(github.event.pull_request.labels.*.name, 'internal') && 1 || 0}}
+          PATCH:  ${{contains(github.event.pull_request.labels.*.name, 'patch') && 1 || 0}}
+          MINOR:  ${{contains(github.event.pull_request.labels.*.name, 'minor') && 1 || 0}}
+          MAJOR:  ${{contains(github.event.pull_request.labels.*.name, 'major') && 1 || 0}}
         run: >
           [1 -eq ($INTERNAL + $PATCH + $MINOR + $MAJOR)] && echo "correct" || echo "incorrect"
