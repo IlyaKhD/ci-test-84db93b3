@@ -45,7 +45,7 @@ jobs:
       - name: Check version
         run: |
           versionDiff=$( git diff HEAD^ HEAD -U0 package.json )
-          if ! [[ $versionDiff ]]; then exit 0; fi
+          if ! [[ $versionDiff ]] || ! [[ $versionDiff =~ (\+ *\"version\":) ]]; then exit 0; fi
 
           errCount=0
           newVersion="$( echo $versionDiff | grep -oP "\+ *\"version\":.+," | grep -oP "\d+\.\d+.\d+" )"
