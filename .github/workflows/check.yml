@@ -34,7 +34,6 @@ jobs:
           fetch-depth: 2
 
       - name: Check version
-        if: steps.check.outputs.current-version != steps.check.outputs.previous-version
         run: >
           let versionBumped=$( git diff HEAD^ HEAD -U0 package.json | tail -n +6 | grep "^\+.*\"version\":" )
           let onlyOneLineChanged=$( git diff HEAD^ HEAD --shortstat | grep "1 *file *changed.*1 *insertion.*1 *deletion" )
