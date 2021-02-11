@@ -48,5 +48,18 @@ jobs:
           if ! [[ $versionDiff ]]; then exit 0; fi
 
           newVersion=$( echo $versionDiff | grep -oP "\+.*\"version\":.+," | grep -oP "\d+\.\d+.\d+" )
+          onlyOneLineChanged=$( git diff HEAD^ HEAD --shortstat | grep "1 *file *changed.*1 *insertion.*1 *deletion" );
+          
+          if ! [[ onlyOneLineChanged ]]
+          then
+            echo "PR with version bump must have no other changes"
+            exit 1
+          fi
           
           echo $newVersion
+          echo ${{ github.event.pull_request.title }}
+          
+          if [[ github.event.pull_request.title != $newVersion ]]
+          then
+            echo "PR title must be '$newVersion'"
+          fi
