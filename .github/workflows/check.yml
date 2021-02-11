@@ -12,6 +12,11 @@ jobs:
 
     name: Should have SemVer tag
     runs-on: ubuntu-latest
+    env:
+      INTERNAL:  ${{contains(github.event.pull_request.labels.*.name, 'internal') && 1 || ''}}
+      PATCH:  ${{contains(github.event.pull_request.labels.*.name, 'patch') && 1 || ''}}
+      MINOR:  ${{contains(github.event.pull_request.labels.*.name, 'minor') && 1 || ''}}
+      MAJOR:  ${{contains(github.event.pull_request.labels.*.name, 'major') && 1 || ''}}
 
     steps:
 
@@ -30,10 +35,5 @@ jobs:
           fi
           
       - name: Check
-        env:
-          INTERNAL:  ${{contains(github.event.pull_request.labels.*.name, 'internal') && 1 || ''}}
-          PATCH:  ${{contains(github.event.pull_request.labels.*.name, 'patch') && 1 || ''}}
-          MINOR:  ${{contains(github.event.pull_request.labels.*.name, 'minor') && 1 || ''}}
-          MAJOR:  ${{contains(github.event.pull_request.labels.*.name, 'major') && 1 || ''}}
         if:  (${{ env.INTERNAL }}${{ env.PATCH }}${{ env.MINOR }}${{ env.MAJOR }}) != 1
         run: echo -${{ env.INTERNAL }}${{ env.PATCH }}${{ env.MINOR }}${{ env.MAJOR }}-
