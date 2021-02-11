@@ -10,7 +10,7 @@ jobs:
 
   check-semver-label:
 
-    name: Must have SemVer label
+    name: Semver Label
     runs-on: ubuntu-latest
 
     steps:
