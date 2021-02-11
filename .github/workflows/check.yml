@@ -75,12 +75,16 @@ jobs:
       - name: Check version
         run: >
           versionBumped=$( git diff HEAD^ HEAD -U0 package.json | tail -n +6 | grep "^\+.*\"version\":" );
-          onlyOneLineChanged=$( git diff HEAD^ HEAD --shortstat | grep "1 *file *changed.*1 *insertion.*1 *deletion" );
+          onlyOneLineChanged=$( git diff HEAD^ HEAD --shortstat | grep "1 *file *changed.*1 *insertion.*1 *deletion" );      
           
           if ! [[ versionBumped ]]; then
             echo "Version not bumped"
             exit 0
           fi
+          
+          newVersion=$( echo $versionBumped | grep -oP "(?<=\")\d+\.\d+\.\d+(?=\")" )
+          
+          echo $newVersion
           
           if [[ onlyOneLineChanged ]]; then
             echo "PR with version bump must have no other changes"
