@@ -48,24 +48,23 @@ jobs:
           versionDiff=$( git diff HEAD^ HEAD -U0 package.json | tail -n +6);
           if ! [[ $versionDiff ]]; then exit 0; fi
 
-          newVersion=$( echo $versionDiff | grep -oP "\+.*\"version\":.+," | grep -oP "\d+\.\d+.\d+" )
-          onlyOneLineChanged=$( git diff HEAD^ HEAD --shortstat | grep "1 *file *changed.*1 *insertion.*1 *deletion" );
-          
           errCount=0
-          
-          if ! [[ onlyOneLineChanged ]]
+          newVersion=$( echo $versionDiff | grep -oP "\+.*\"version\":.+," | grep -oP "\d+\.\d+.\d+" )
+          stat=$( git diff HEAD^ HEAD --shortstat )
+
+          if ! [[ $stat =~ (1 *file *changed.*1 *insertion.*1 *deletion) ]]
           then
             echo "PR with version bump must have no other changes"
             ((errCount+=1))
           fi
-          
+
           echo $newVersion
           echo ${{ github.event.pull_request.title }}
-          
+
           if [[ github.event.pull_request.title != $newVersion ]]
           then
             echo "PR title must be '$newVersion'"
             ((errCount+=1))
           fi
-          
+
           if [[ $errCount != 0 ]]; then exit 1; fi
