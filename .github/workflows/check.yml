@@ -52,13 +52,13 @@ jobs:
           newVersion=$( echo $versionDiff | grep -oP "\+.*\"version\":.+," | grep -oP "\d+\.\d+.\d+" )
           stat=$( git diff HEAD^ HEAD --shortstat )
 
-          if ! [[ $stat =~ (1 *file *changed.*1 *insertion.*1 *deletion) ]]
+          if ! [[ "$stat" =~ (1 *file *changed.*1 *insertion.*1 *deletion) ]]
           then
             echo "PR with version bump must have no other changes"
             ((errCount+=1))
           fi
 
-          if [[ ${{ github.event.pull_request.title }} != $newVersion ]]
+          if [[ "${{ github.event.pull_request.title }}" != "$newVersion" ]]
           then
             echo "PR title must be '$newVersion'"
             ((errCount+=1))
