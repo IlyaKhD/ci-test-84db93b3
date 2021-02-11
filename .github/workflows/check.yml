@@ -21,10 +21,8 @@ jobs:
           MINOR:  ${{contains(github.event.pull_request.labels.*.name, 'minor') && 1 || 0}}
           MAJOR:  ${{contains(github.event.pull_request.labels.*.name, 'major') && 1 || 0}}
         run: >
-          if [ $((INTERNAL + PATCH + MINOR + MAJOR)) -eq 1 ]
+          if [ $((INTERNAL + PATCH + MINOR + MAJOR)) -ne 1 ]
             then
-              echo "correct"
-            else
               echo "incorrect"
               exit 1
           fi
