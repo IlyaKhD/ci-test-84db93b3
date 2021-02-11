@@ -1,10 +1,6 @@
 name: Check
 
-on:
-  pull_request:
-    types:
-      - labeled
-      - unlabeled
+on: pull_request
 
 jobs:
 
@@ -12,7 +8,6 @@ jobs:
 
     name: Semver Label
     runs-on: ubuntu-latest
-
     steps:
 
       - name: Check labels
@@ -25,4 +20,29 @@ jobs:
           if [ $((INTERNAL + PATCH + MINOR + MAJOR)) -ne 1 ]; then
             echo "PR must have one and only one tag of the following: internal, patch, minor, major. "
             exit 1
+          fi
+
+  check-version-bump:
+
+    name: Version Bump
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 2
+
+      - name: Check version bumped
+        id: check
+        uses: salsify/action-detect-and-tag-new-version@v2
+        with:
+          create-tag: false
+
+      - name: Check version
+        if: steps.check.outputs.current-version != steps.check.outputs.previous-version
+#       run: git diff HEAD^ HEAD --shortstat | grep "1 *file *changed.*1 *insertion.*1 *deletion" || (echo "" && exit 1)
+        run: >
+          if ! [[ $( git diff HEAD^ HEAD --shortstat | grep "1 *file *changed.*1 *insertion.*1 *deletion" ) ]]; then
+            echo "PR with version bump must have no other changes"
           fi
