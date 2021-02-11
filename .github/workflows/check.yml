@@ -8,9 +8,9 @@ on:
 
 jobs:
 
-  check-semver-tag:
+  check-semver-label:
 
-    name: PR must have SemVer label
+    name: Must have SemVer label
     runs-on: ubuntu-latest
 
     steps:
