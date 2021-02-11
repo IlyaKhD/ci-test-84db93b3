@@ -58,10 +58,7 @@ jobs:
             ((errCount+=1))
           fi
 
-          echo $newVersion
-          echo ${{ github.event.pull_request.title }}
-
-          if [[ github.event.pull_request.title != $newVersion ]]
+          if [[ ${{ github.event.pull_request.title }} != $newVersion ]]
           then
             echo "PR title must be '$newVersion'"
             ((errCount+=1))
