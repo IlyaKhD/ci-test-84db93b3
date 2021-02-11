@@ -36,4 +36,4 @@ jobs:
           MINOR:  ${{contains(github.event.pull_request.labels.*.name, 'minor') && 1 || ''}}
           MAJOR:  ${{contains(github.event.pull_request.labels.*.name, 'major') && 1 || ''}}
         if:  ${{ env.INTERNAL }}${{ env.PATCH }}${{ env.MINOR }}${{ env.MAJOR }} != '1'
-        run: exit 1
+        run: echo ${{ env.INTERNAL }}${{ env.PATCH }}${{ env.MINOR }}${{ env.MAJOR }}
