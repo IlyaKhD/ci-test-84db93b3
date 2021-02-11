@@ -16,11 +16,7 @@ jobs:
     steps:
 
       - name: Print Count
-        run: >
-          echo ${{contains(github.event.pull_request.labels.*.name, 'internal')}}\
-            ${{contains(github.event.pull_request.labels.*.name, 'patch')}}\
-            ${{contains(github.event.pull_request.labels.*.name, 'minor')}}\
-            ${{contains(github.event.pull_request.labels.*.name, 'major')}}\
+        run: echo (${{contains(github.event.pull_request.labels.*.name, 'internal')}}${{contains(github.event.pull_request.labels.*.name, 'patch')}}${{contains(github.event.pull_request.labels.*.name, 'minor')}}${{contains(github.event.pull_request.labels.*.name, 'major')}})
 
       - name: Check
         if: ('true' == (${{contains(github.event.pull_request.labels.*.name, 'internal')}}${{contains(github.event.pull_request.labels.*.name, 'patch')}}${{contains(github.event.pull_request.labels.*.name, 'minor')}}${{contains(github.event.pull_request.labels.*.name, 'major')}}))
