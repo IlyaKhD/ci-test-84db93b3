@@ -33,16 +33,18 @@ jobs:
         with:
           fetch-depth: 2
 
-      - name: Check version bumped
-        id: check
-        uses: salsify/action-detect-and-tag-new-version@v2
-        with:
-          create-tag: false
-
       - name: Check version
         if: steps.check.outputs.current-version != steps.check.outputs.previous-version
-#       run: git diff HEAD^ HEAD --shortstat | grep "1 *file *changed.*1 *insertion.*1 *deletion" || (echo "" && exit 1)
         run: >
-          if ! [[ $( git diff HEAD^ HEAD --shortstat | grep "1 *file *changed.*1 *insertion.*1 *deletion" ) ]]; then
+          let versionBumped=$( git diff HEAD^ HEAD -U0 package.json | tail -n +6 | grep "^\+.*\"version\":" )
+          let onlyOneLineChanged=$( git diff HEAD^ HEAD --shortstat | grep "1 *file *changed.*1 *insertion.*1 *deletion" )
+          
+          if ! [[ versionBumped ]]; then
+            echo "Version not bumped"
+            exit 0
+          fi
+          
+          if ! [[ onlyOneLineChanged ]]; then
             echo "PR with version bump must have no other changes"
+            exit 1
           fi
