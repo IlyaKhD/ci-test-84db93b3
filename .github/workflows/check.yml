@@ -44,23 +44,6 @@ jobs:
 
       - name: Check version
         run: |
-          versionDiff=$( git diff HEAD^ HEAD -U0 package.json)
+          versionDiff=$( git diff HEAD^ HEAD -U0 package.json )
           if ! [[ $versionDiff ]]; then exit 0; fi
-
-          errCount=0
-          newVersion="$( echo $versionDiff | grep -oP "\+ *\"version\":.+," | grep -oP "\d+\.\d+.\d+" )"
-          stat=$( git diff HEAD^ HEAD --shortstat )
-
-          if ! [[ "$stat" =~ (1 *file *changed.*1 *insertion.*1 *deletion) ]]
-          then
-            echo "PR with version bump must have no other changes"
-            ((errCount+=1))
-          fi
-
-          if [[ "${{ github.event.pull_request.title }}" != "$newVersion" ]]
-          then
-            echo "PR title must be '$newVersion'"
-            ((errCount+=1))
-          fi
-
-          if [[ $errCount != 0 ]]; then exit 1; fi
+          echo 123
