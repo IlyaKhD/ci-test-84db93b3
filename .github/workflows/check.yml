@@ -35,5 +35,5 @@ jobs:
           fi
           
       - name: Check
-        if:  (${{ env.INTERNAL }}${{ env.PATCH }}${{ env.MINOR }}${{ env.MAJOR }}) != 1
+        if:  format('{0}{1}{2}{3}', env.INTERNAL, env.PATCH, env.MINOR, env.MAJOR) != 1
         run: echo -${{ env.INTERNAL }}${{ env.PATCH }}${{ env.MINOR }}${{ env.MAJOR }}-
