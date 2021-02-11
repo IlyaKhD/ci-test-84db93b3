@@ -44,4 +44,6 @@ jobs:
 
       - name: Check version
         run: |
-          git diff HEAD^ HEAD -U0 package.json | tail -n +6;
+          msg=$(git diff HEAD^ HEAD -U0 package.json | tail -n +6;)
+          
+          echo $msg
