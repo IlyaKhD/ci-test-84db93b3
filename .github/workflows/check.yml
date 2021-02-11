@@ -12,28 +12,18 @@ jobs:
 
     name: Should have SemVer tag
     runs-on: ubuntu-latest
-    env:
-      INTERNAL:  ${{contains(github.event.pull_request.labels.*.name, 'internal') && 1 || ''}}
-      PATCH:  ${{contains(github.event.pull_request.labels.*.name, 'patch') && 1 || ''}}
-      MINOR:  ${{contains(github.event.pull_request.labels.*.name, 'minor') && 1 || ''}}
-      MAJOR:  ${{contains(github.event.pull_request.labels.*.name, 'major') && 1 || ''}}
 
     steps:
 
-      - name: Print Count
+      - name: Check labels
         env:
           INTERNAL:  ${{contains(github.event.pull_request.labels.*.name, 'internal') && 1 || 0}}
           PATCH:  ${{contains(github.event.pull_request.labels.*.name, 'patch') && 1 || 0}}
           MINOR:  ${{contains(github.event.pull_request.labels.*.name, 'minor') && 1 || 0}}
           MAJOR:  ${{contains(github.event.pull_request.labels.*.name, 'major') && 1 || 0}}
         run: >
-          if [ $((INTERNAL + PATCH + MINOR + MAJOR)) -eq 1 ]
-            then
-              echo "correct";
-            else
-              echo "incorrect"
+          if [ $((INTERNAL + PATCH + MINOR + MAJOR)) -ne 1 ]
+          then
+              echo "PR must have one and only one tag of the following: internal, patch, minor, major. "
+              exit 1
           fi
-          
-      - name: Check
-        if:  format('{0}{1}{2}{3}', env.INTERNAL, env.PATCH, env.MINOR, env.MAJOR) != 1
-        run: echo -${{ env.INTERNAL }}${{ env.PATCH }}${{ env.MINOR }}${{ env.MAJOR }}-
