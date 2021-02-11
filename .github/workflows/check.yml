@@ -42,7 +42,7 @@ jobs:
           fetch-depth: 2
 
       - name: Check version
-        run: >
+        run: |
           git diff HEAD^ HEAD -U0 package.json | tail -n +6 | grep "^\+.*\"version\":";
           versionBumped="$( echo 123 )";
          
