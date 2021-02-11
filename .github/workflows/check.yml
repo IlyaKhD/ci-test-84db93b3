@@ -44,6 +44,9 @@ jobs:
 
       - name: Check version
         run: |
-          versionBumped=$( git diff HEAD^ HEAD -U0 package.json | tail -n +6 | grep -oP "\+.*\"version\":.*," );
+          versionDiff=$( git diff HEAD^ HEAD -U0 package.json | tail -n +6);
+          if ! [[ $versionDiff ]]; then exit 0; fi
+
+          newVersion=$( echo $versionDiff | grep -oP "\+.*\"version\":.+," | grep -oP "\d+\.\d+.\d+" )
           
-          echo $versionBumped
+          echo $newVersion
