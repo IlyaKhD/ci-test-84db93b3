@@ -1,13 +1,6 @@
 name: Check
-on:
-  pull_request:
-    types: 
-      - opened
-      - reopened
-      - edited
-      - synchronize
-      - labeled
-      - unlabeled
+on: pull_request
+
 jobs:
 
   check-version-pr:
