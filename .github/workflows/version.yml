@@ -34,7 +34,7 @@ jobs:
 
             if [[ $title != $version ]]
             then
-              echo "::error::PR title should match new version"
+              echo "::error::PR title should match new version: $version"
               ((errCount+=1))
             fi
 
