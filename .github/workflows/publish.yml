@@ -1,20 +1,16 @@
 name: Publish
-
 on:
   push:
     paths:
       - package.json
-
 jobs:
 
   check-version-bump:
-
     runs-on: ubuntu-latest
     name: Check Version Bump 
     outputs:
       changed: ${{ steps.detection.outputs.changed }}
       version: ${{ steps.detection.outputs.version }}
-
     steps:
 
       - name: Checkout
@@ -41,7 +37,6 @@ jobs:
           echo ${{ steps.detection.outputs.version }}
          
   publish:
-
     name: Publish
     needs: [ check-version-bump ]
     runs-on: windows-latest
