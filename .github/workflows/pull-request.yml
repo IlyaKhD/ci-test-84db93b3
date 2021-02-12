@@ -17,7 +17,7 @@ jobs:
         id: versionBump
         uses: ./.github/actions/detect-version-bump
 
-      - name: Check diff stat
+      - name: Check for other changes
         if: steps.versionBump.outputs.changed       
         run: |
           stat=$(git diff HEAD^ HEAD --shortstat)
