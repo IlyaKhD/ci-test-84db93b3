@@ -20,7 +20,7 @@ jobs:
 
       - name: Detect Bump
         id: detection
-        uses: ./.github/actions/detect-version-bump.yml
+        uses: ./.github/actions/detect-version-bump
       
       - run: echo "3rd step"
                   
