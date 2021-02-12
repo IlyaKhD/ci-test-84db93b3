@@ -27,8 +27,8 @@ jobs:
             exit 1
           fi
 
-  check-version-bump:
-    name: Version Bump
+  check-version-bump-pr-title:
+    name: Version Bump PR Title
     runs-on: ubuntu-latest
     steps:
 
