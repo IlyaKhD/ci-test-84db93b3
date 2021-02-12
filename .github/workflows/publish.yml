@@ -6,6 +6,7 @@ on:
 jobs:
 
   check-version-bump:
+
     runs-on: ubuntu-latest
     name: Check Version Bump 
     outputs:
@@ -37,6 +38,7 @@ jobs:
           echo ${{ steps.detection.outputs.version }}
          
   publish:
+
     name: Publish
     needs: [ check-version-bump ]
     runs-on: windows-latest
