@@ -1,6 +1,6 @@
 {
   "name": "ci-test-84db93b3",
-  "version": "3.1.3",
+  "version": "3.1.4",
   "description": "CI &amp; CD",
   "main": "index.js",
   "scripts": {
