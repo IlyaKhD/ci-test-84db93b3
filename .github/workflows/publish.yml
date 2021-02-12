@@ -18,7 +18,8 @@ jobs:
         with:
           fetch-depth: 2
 
-      - id: detection
+      - name: Detect Bump
+        id: detection
         uses: ./.github/actions/detect-version-bump
 
   publish:
