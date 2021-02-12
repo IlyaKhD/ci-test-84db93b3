@@ -10,25 +10,7 @@ on:
       - unlabeled
 jobs:
 
-  check-semver-label:
-    name: Semver Label
-    runs-on: ubuntu-latest
-    steps:
-
-      - name: Check labels
-        env:
-          INTERNAL:  ${{contains(github.event.pull_request.labels.*.name, 'internal') && 1 || 0}}
-          PATCH:  ${{contains(github.event.pull_request.labels.*.name, 'patch') && 1 || 0}}
-          MINOR:  ${{contains(github.event.pull_request.labels.*.name, 'minor') && 1 || 0}}
-          MAJOR:  ${{contains(github.event.pull_request.labels.*.name, 'major') && 1 || 0}}
-        run: |
-          if [ $((INTERNAL + PATCH + MINOR + MAJOR)) -ne 1 ]
-          then
-            echo "PR must have one and only one tag of the following: internal, patch, minor, major. "
-            exit 1
-          fi
-
-  check-version-bump:
+  check-version-pr:
     name: Version Bump
     runs-on: ubuntu-latest
     steps:
@@ -37,24 +19,18 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 2
+          
+      - name: Detect version bump
+        id: versionBump
+        uses: ./.github/actions/detect-version-bump
 
-      - name: Check version
+      - name: Check version is the only change
+        if: steps.versionBump.outputs.changed       
         run: |
-          versionDiff=$( git diff HEAD^ HEAD -U0 package.json )
-          if ! [[ $versionDiff ]] || ! [[ $versionDiff =~ (\+ *\"version\":) ]]; then exit 0; fi
-
-          errCount=0
-          newVersion="$( echo $versionDiff | grep -oP "\+ *\"version\":.+," | grep -oP "\d+\.\d+.\d+" )"
-          stat=$( git diff HEAD^ HEAD --shortstat )
-
+          stat=$(git diff HEAD^ HEAD --shortstat)
+          
           if ! [[ "$stat" =~ (1 *file *changed.*1 *insertion.*1 *deletion) ]]
           then
             echo "PR with version bump must have no other changes"
-            ((errCount+=1))
+            exit 1
           fi
-          if [[ "${{ github.event.pull_request.title }}" != "$newVersion" ]]
-          then
-            echo "PR title must be '$newVersion'"
-            ((errCount+=1))
-          fi
-          if [[ $errCount != 0 ]]; then exit 1; fi
