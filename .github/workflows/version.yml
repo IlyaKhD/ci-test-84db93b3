@@ -44,4 +44,4 @@ jobs:
               ((errCount+=1))
             fi
 
-            if [[ errCount -ne 0 ]]; then exit 1; fi
+            exit $errCount
