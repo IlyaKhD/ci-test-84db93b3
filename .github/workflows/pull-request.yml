@@ -1,0 +1,53 @@
+name: Check
+on:
+  pull_request:
+    types: 
+      - opened
+      - reopened
+      - edited
+      - labeled
+      - unlabeled
+jobs:
+
+  check-semver-label:
+    name: Semver Label
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Check labels
+        env:
+          INTERNAL:  ${{contains(github.event.pull_request.labels.*.name, 'internal') && 1 || 0}}
+          PATCH:  ${{contains(github.event.pull_request.labels.*.name, 'patch') && 1 || 0}}
+          MINOR:  ${{contains(github.event.pull_request.labels.*.name, 'minor') && 1 || 0}}
+          MAJOR:  ${{contains(github.event.pull_request.labels.*.name, 'major') && 1 || 0}}
+        run: |
+          if [ $((INTERNAL + PATCH + MINOR + MAJOR)) -ne 1 ]
+          then
+            echo "PR must have one and only one tag of the following: internal, patch, minor, major. "
+            exit 1
+          fi
+
+  check-version-bump:
+    name: Version Bump
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 2
+
+      - name: Detect Version Bump
+        id: versionBump
+        uses: ./.github/actions/detect-version-bump
+
+      - name: Check Title
+        if: steps.versionBump.outputs.changed
+        env:
+          version: ${{steps.versionBump.outputs.version}}
+        run: |
+          if [[ "${{ github.event.pull_request.title }}" != "$version" ]]
+          then
+            echo "PR title must be '$version'"
+            exit 1
+          fi
