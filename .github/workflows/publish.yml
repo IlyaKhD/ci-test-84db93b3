@@ -40,7 +40,7 @@ jobs:
     name: Publish
     needs: [ check-version-bump ]
     runs-on: windows-latest
-    if: needs.version-check.outputs.changed == 'true'
+    if: needs.check-version-bump.outputs.changed == 'true'
 
     steps:
       - run: echo ${{needs.version-check.outputs.version}}
