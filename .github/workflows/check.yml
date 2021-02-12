@@ -29,7 +29,6 @@ jobs:
           fi
 
   check-version-bump:
-
     name: Version Bump
     runs-on: ubuntu-latest
     steps:
