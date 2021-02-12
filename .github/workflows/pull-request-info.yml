@@ -1,4 +1,4 @@
-name: PR Info
+name: PR
 on:
   pull_request:
     types: 
@@ -8,7 +8,7 @@ on:
 jobs:
 
   title-match-bumped-version:
-    name: Title match bumped version
+    name: Title match version if version bumped
     runs-on: ubuntu-latest
     steps:
 
