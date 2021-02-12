@@ -11,9 +11,6 @@ runs:
   steps:
 
     - shell: bash
-      run: echo "running reusble action"
-
-    - shell: bash
       id: detection
       run: |
         versionDiff=$( git diff HEAD^ HEAD -U0 package.json )
