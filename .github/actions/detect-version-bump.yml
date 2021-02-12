@@ -1,0 +1,20 @@
+name: Detect Version Bump
+outputs
+  changed: ${{ steps.detection.outputs.changed }}
+  version: ${{ steps.detection.outputs.version }}
+runs:
+  steps:
+  
+    - run: echo "running reusble action"
+
+    - id: detection
+      run: |
+        versionDiff=$( git diff HEAD^ HEAD -U0 package.json )
+        if ! [[ $versionDiff ]] || ! [[ $versionDiff =~ (\+ *\"version\":) ]]
+        then
+          echo "Version didn't change"
+          exit 0
+        fi
+        
+        echo "::set-output name=changed::true"
+        echo "::set-output name=version::$( echo $versionDiff | grep -oP "\+ *\"version\":.+," | grep -oP "\d+\.\d+.\d+" )"
