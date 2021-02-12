@@ -1,0 +1,28 @@
+name: PR
+on:
+  pull_request:
+    types: 
+      - opened
+      - reopened
+      - edited
+jobs:
+
+  title-match-bumped-version:
+    name: Title match bumped version
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 2
+
+      - name: Detect version bump
+        id: versionBump
+        uses: ./.github/actions/detect-version-bump
+
+      - name: Check title
+        if: steps.versionBump.outputs.changed && github.event.pull_request.title != steps.versionBump.outputs.version
+        run: |
+            echo "Title must match new version"
+            exit 1
