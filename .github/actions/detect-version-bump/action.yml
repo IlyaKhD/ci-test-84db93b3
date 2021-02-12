@@ -19,6 +19,9 @@ runs:
           echo "Version didn't change"
           exit 0
         fi
+        
+        newVersion=$(echo $versionDiff | grep -oP "\+ *\"version\":.+," | grep -oP "\d+\.\d+.\d+")
+        echo "Version changed to $newVersion"
 
         echo "::set-output name=changed::true"
-        echo "::set-output name=version::$( echo $versionDiff | grep -oP "\+ *\"version\":.+," | grep -oP "\d+\.\d+.\d+" )"
+        echo "::set-output name=version::$(newVersion)"
