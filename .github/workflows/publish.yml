@@ -1,8 +1,8 @@
 name: Publish
 on:
   push:
-    paths:
-      - package.json
+#     paths:
+#       - package.json
 jobs:
 
   check-version-bump:
@@ -20,7 +20,7 @@ jobs:
 
       - name: Detect Bump
         id: detection
-        uses: ./.github/actions/detect-version-bump
+        uses: ./.github/actions/detect-version-bump.yml
       
       - run: echo "3rd step"
                   
