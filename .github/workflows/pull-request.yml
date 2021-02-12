@@ -8,8 +8,8 @@ on:
       - unlabeled
 jobs:
 
-  semver:
-    name: Semver label added
+  semver-label:
+    name: Semver label
     runs-on: ubuntu-latest
     steps:
 
