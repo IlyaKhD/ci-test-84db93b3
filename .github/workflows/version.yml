@@ -29,13 +29,13 @@ jobs:
 
             if [[ $title != $version ]]
             then
-              echo "::error::Title must match new version"
+              echo "::error::PR title should match new version"
               ((errCount+=1))
             fi
 
             if ! [[ $(git diff HEAD^ HEAD --shortstat) =~ (1 *file *changed.*1 *insertion.*1 *deletion) ]]
             then
-              echo "::error::PR with version bump must have no other changes"
+              echo "::error::PR with version bump should have no other changes"
               ((errCount+=1))
             fi
 
