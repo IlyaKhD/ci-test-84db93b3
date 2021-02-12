@@ -9,7 +9,7 @@ on:
 jobs:
 
   semver:
-    name: Has semver label
+    name: Semver label added
     runs-on: ubuntu-latest
     steps:
 
