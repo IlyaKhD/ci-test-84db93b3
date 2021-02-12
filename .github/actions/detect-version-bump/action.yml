@@ -8,12 +8,13 @@ outputs:
     value: ${{ steps.detection.outputs.version }}
 runs:
   using: composite
-  shell: bash
   steps:
 
-    - run: echo "running reusble action"
+    - shell: bash
+      run: echo "running reusble action"
 
-    - id: detection
+    - shell: bash
+      id: detection
       run: |
         versionDiff=$( git diff HEAD^ HEAD -U0 package.json )
         if ! [[ $versionDiff ]] || ! [[ $versionDiff =~ (\+ *\"version\":) ]]
