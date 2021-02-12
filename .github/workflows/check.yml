@@ -4,7 +4,7 @@ on: pull_request
 jobs:
 
   check-version-pr:
-    name: Version Bump
+    name: Version is the only change
     runs-on: ubuntu-latest
     steps:
 
@@ -17,7 +17,7 @@ jobs:
         id: versionBump
         uses: ./.github/actions/detect-version-bump
 
-      - name: Check version is the only change
+      - name: Check diff stat
         if: steps.versionBump.outputs.changed       
         run: |
           stat=$(git diff HEAD^ HEAD --shortstat)
