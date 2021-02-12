@@ -4,7 +4,7 @@ on: pull_request
 jobs:
 
   check-version-pr:
-    name: Version is the only change
+    name: No other changes if version bumped
     runs-on: ubuntu-latest
     steps:
 
