@@ -3,6 +3,8 @@ outputs:
   changed: ${{ steps.detection.outputs.changed }}
   version: ${{ steps.detection.outputs.version }}
 runs:
+  using: composite
+  shell: bash
   steps:
 
     - run: echo "running reusble action"
