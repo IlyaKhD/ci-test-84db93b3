@@ -18,17 +18,14 @@ jobs:
         with:
           fetch-depth: 2
 
-      - name: Detect Bump
-        id: detection
+      - id: detection
         uses: ./.github/actions/detect-version-bump
-      
-      - run: echo "3rd step"
-                  
+
   publish:
     name: Publish
     needs: [ check-version-bump ]
     runs-on: windows-latest
     if: needs.check-version-bump.outputs.changed == 'true'
-
     steps:
+
       - run: echo ${{needs.check-version-bump.outputs.version}}
