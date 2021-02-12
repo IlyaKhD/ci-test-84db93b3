@@ -27,8 +27,8 @@ jobs:
       - name: Check version bump PR
         if:  steps.versionBump.outputs.changed
         env:
-          title: github.event.pull_request.title
-          version: steps.versionBump.outputs.version
+          title: ${{github.event.pull_request.title}}
+          version: ${{steps.versionBump.outputs.version}}
         run: |
             errCount=0
 
