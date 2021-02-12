@@ -19,17 +19,24 @@ jobs:
         id: versionBump
         uses: ./.github/actions/detect-version-bump
 
-      - name: Check title matches version
-        if:  steps.versionBump.outputs.changed && github.event.pull_request.title != steps.versionBump.outputs.version
+      - name: Check version bump PR
+        if:  steps.versionBump.outputs.changed
+        env:
+          title: github.event.pull_request.title
+          version: steps.versionBump.outputs.version
         run: |
-            echo "Title must match new version"
-            exit 1
+            errCount=0
 
-      - name: Check there are no other changes
-        if: steps.versionBump.outputs.changed
-        run: |         
-          if ! [[ $(git diff HEAD^ HEAD --shortstat) =~ (1 *file *changed.*1 *insertion.*1 *deletion) ]]
-          then
-            echo "PR with version bump must have no other changes"
-            exit 1
-          fi
+            if [[ $title != $version ]]
+            then
+              echo "::error::Title must match new version"
+              ((errCount+=1))
+            fi
+
+            if ! [[ $(git diff HEAD^ HEAD --shortstat) =~ (1 *file *changed.*1 *insertion.*1 *deletion) ]]
+            then
+              echo "::error::PR with version bump must have no other changes"
+              ((errCount+=1))
+            fi
+
+            if [[ errCount -ne 0 ]]; then exit 1; fi
