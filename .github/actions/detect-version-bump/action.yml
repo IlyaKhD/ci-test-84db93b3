@@ -1,7 +1,11 @@
 name: Detect Version Bump
 outputs:
-  changed: ${{ steps.detection.outputs.changed }}
-  version: ${{ steps.detection.outputs.version }}
+  changed:
+    description: true if version is bumped
+    value: ${{ steps.detection.outputs.changed }}
+  version:
+    description: new version
+    value: ${{ steps.detection.outputs.version }}
 runs:
   using: composite
   shell: bash
