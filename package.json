@@ -1,7 +1,7 @@
 {
   "name": "ci-test-84db93b3",
   "version": "3.1.5",
-  "description": "CI &amp; CD etc",
+  "description": "CI &amp; CD",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
