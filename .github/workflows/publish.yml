@@ -20,22 +20,10 @@ jobs:
 
       - name: Detect Bump
         id: detection
-        run: |
-          versionDiff=$( git diff HEAD^ HEAD -U0 package.json )
-          if ! [[ $versionDiff ]] || ! [[ $versionDiff =~ (\+ *\"version\":) ]]
-          then
-            echo "::debug::Version didn't change"
-            exit 0
-          fi
-          
-          echo "::set-output name=changed::true"
-          echo "::set-output name=version::$( echo $versionDiff | grep -oP "\+ *\"version\":.+," | grep -oP "\d+\.\d+.\d+" )"
-          
-      - name: print
-        run: |
-          echo ${{ steps.detection.outputs.changed }}
-          echo ${{ steps.detection.outputs.version }}
-         
+        uses: ./.github/actions/detect-version-bump
+      
+      - run: echo "3rd step"
+                  
   publish:
     name: Publish
     needs: [ check-version-bump ]
@@ -43,4 +31,4 @@ jobs:
     if: needs.check-version-bump.outputs.changed == 'true'
 
     steps:
-      - run: echo ${{needs.version-check.outputs.version}}
+      - run: echo ${{needs.check-version-bump.outputs.version}}
