@@ -1,4 +1,4 @@
-name: PR
+name: PR Labels
 on:
   pull_request:
     types: 
@@ -9,7 +9,7 @@ on:
 jobs:
 
   semver:
-    name: Semver
+    name: Semver label added
     runs-on: ubuntu-latest
     steps:
 
