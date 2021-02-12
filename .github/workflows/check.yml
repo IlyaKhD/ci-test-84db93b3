@@ -1,5 +1,4 @@
 name: Check
-
 on:
   pull_request:
     types: 
@@ -9,11 +8,9 @@ on:
       - synchronize
       - labeled
       - unlabeled
-
 jobs:
 
   check-semver-label:
-
     name: Semver Label
     runs-on: ubuntu-latest
     steps:
