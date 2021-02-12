@@ -2,24 +2,50 @@ name: Publish
 
 on:
   push:
-    branches:
-      - "*"
+    paths:
+      - package.json
 
 jobs:
 
-  hello:
+  check-version-bump:
 
     runs-on: ubuntu-latest
-    name: Hello
-    
+    name: Check Version Bump 
+    outputs:
+      changed: ${{ steps.detection.outputs.changed }}
+      version: ${{ steps.detection.outputs.version }}
+
     steps:
 
-      - name: Set up Node
-        uses: actions/setup-node@v2
+      - name: Checkout
+        uses: actions/checkout@v2
         with:
-          node-version: 12
+          fetch-depth: 2
+
+      - name: Detect Bump
+        id: detection
+        run: |
+          versionDiff=$( git diff HEAD^ HEAD -U0 package.json )
+          if ! [[ $versionDiff ]] || ! [[ $versionDiff =~ (\+ *\"version\":) ]]
+          then
+            echo "::debug::Version didn't change"
+            exit 0
+          fi
           
-      - name: Publish
-        run: npm dist-tag add devextreme-internal-tools@2.2.1 latest
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          echo "::set-output name=changed::true"
+          echo "::set-output name=version::$( echo $versionDiff | grep -oP "\+ *\"version\":.+," | grep -oP "\d+\.\d+.\d+" )"
+          
+      - name: print
+        run: |
+          echo ${{ steps.detection.outputs.changed }}
+          echo ${{ steps.detection.outputs.version }}
+         
+  publish:
+
+    name: Publish
+    needs: [ check-version-bump ]
+    runs-on: windows-latest
+    if: needs.version-check.outputs.changed == 'true'
+
+    steps:
+      - run: echo ${{needs.version-check.outputs.version}}
