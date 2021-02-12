@@ -1,14 +1,10 @@
-name: PR
-on:
-  pull_request:
-    types: 
-      - opened
-      - reopened
-      - edited
+name: Check
+on: pull_request
+
 jobs:
 
-  title-match-bumped-version:
-    name: Title match bumped version
+  check-version-pr:
+    name: Version is the only change
     runs-on: ubuntu-latest
     steps:
 
@@ -16,13 +12,18 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 2
-
+          
       - name: Detect version bump
         id: versionBump
         uses: ./.github/actions/detect-version-bump
 
-      - name: Check title
-        if: steps.versionBump.outputs.changed && github.event.pull_request.title != steps.versionBump.outputs.version
+      - name: Check diff stat
+        if: steps.versionBump.outputs.changed       
         run: |
-            echo "Title must match new version"
+          stat=$(git diff HEAD^ HEAD --shortstat)
+          
+          if ! [[ "$stat" =~ (1 *file *changed.*1 *insertion.*1 *deletion) ]]
+          then
+            echo "PR with version bump must have no other changes"
             exit 1
+          fi
