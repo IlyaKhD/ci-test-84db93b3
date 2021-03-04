@@ -20,7 +20,7 @@ runs:
           exit 0
         fi
         
-        newVersion=$(echo $versionDiff | grep -oP "\+ *\"version\":.+," | grep -oP "\d+\.\d+.\d+")
+        newVersion=$(echo $versionDiff | grep -oP "\+ *\"version\":.+," | grep -oP "\d+\.\d+\.\d+(-\w+(\.\d+)*)?")
         echo "Version changed to $newVersion"
 
         echo "::set-output name=changed::true"
