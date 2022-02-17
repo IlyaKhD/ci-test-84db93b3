@@ -6,3 +6,12 @@ one more line
 refactored line
 one more line
 more
+
+
+```mermaid
+  graph TD;
+      A-->B;
+      A-->C;
+      B-->D;
+      C-->D;
+```
