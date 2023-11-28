@@ -2,6 +2,11 @@ name: Publishing to GitHub Packages
 
 on:
   workflow_dispatch:
+    inputs:
+      pattern:
+        type: string
+        description: grep pattern
+        required: false
 
 jobs:
 
@@ -34,10 +39,14 @@ jobs:
         run: |
           npm pack --pack-destination="../"
 
-      - run: ls
+      - name: ls
+        run: ls | grep '${{ inputs.pattern }}' |
+          while read filename
+          	do stat ${filename}
+          done
 
-      - name: Publish to npm.pkg.github.com
-        working-directory: package
-        run: npm publish --registry https://npm.pkg.github.com
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # - name: Publish to npm.pkg.github.com
+      #   working-directory: package
+      #   run: npm publish --registry https://npm.pkg.github.com --access=restricted
+      #   env:
+      #     NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
