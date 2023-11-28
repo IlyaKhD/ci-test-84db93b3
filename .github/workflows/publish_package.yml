@@ -40,7 +40,7 @@ jobs:
           npm pack --pack-destination="../"
 
       - name: ls
-        run: ls | grep --extended-regexp --ignore-case '${{ inputs.pattern }}' |
+        run: ls *.tgz | grep --extended-regexp --ignore-case '${{ inputs.pattern }}' |
           while read filename; do
             stat ${filename};
           done
