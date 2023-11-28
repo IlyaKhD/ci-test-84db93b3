@@ -30,4 +30,12 @@ jobs:
           sed -i '/\"repository\"/,/}/ d; /^$/d' package.json
           npm pack --pack-destination="../"
 
-      - run: cat $NPM_CONFIG_USERCONFIG
+      - name: Update scope
+        working-directory: package
+        run: npm init -y --scope ${{ github.repository_owner }}
+
+      - name: Publish to npm.pkg.github.com
+        working-directory: package
+        run: npm publish --dry-run
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
