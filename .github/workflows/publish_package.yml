@@ -30,4 +30,4 @@ jobs:
           sed -i '/\"repository\"/,/}/ d; /^$/d' package.json
           npm pack --pack-destination="../"
 
-      - run: cat .npmrc
+      - run: cat $NPM_CONFIG_USERCONFIG
