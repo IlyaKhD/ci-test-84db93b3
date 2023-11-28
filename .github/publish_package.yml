@@ -1,0 +1,35 @@
+name: Publishing to GitHub Packages
+
+on:
+  workflow_dispatch:
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+          registry-url: 'https://npm.pkg.github.com'
+    
+      - name: Get tarball from npmjs.org
+        run: |
+          npm pack devextreme@23.2.2-beta
+          tar -xzf devextreme@23.2.2-beta.tgz
+          
+      - name: Remove the repository field
+        working-directory: package
+        run: |
+          sed -i '/\"repository\"/,/}/ d; /^$/d' package.json
+          npm pack --pack-destination="../"
+
+      - name: Copy build artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: artifacts
+          path: |
+            *.tgz
+          retention-days: 1
+        
