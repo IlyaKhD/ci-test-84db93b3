@@ -7,6 +7,9 @@ jobs:
 
   build:
     runs-on: ubuntu-latest
+    permissions:
+      packages: write
+      contents: read
 
     steps:
       - uses: actions/setup-node@v3
@@ -25,11 +28,8 @@ jobs:
           sed -i '/\"repository\"/,/}/ d; /^$/d' package.json
           npm pack --pack-destination="../"
 
-      - name: Copy build artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: artifacts
-          path: |
-            *.tgz
-          retention-days: 1
-        
+      - name: Publish to npm.pkg.github.com
+        working-directory: package
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npm publish
