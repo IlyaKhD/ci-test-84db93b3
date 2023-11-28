@@ -35,6 +35,6 @@ jobs:
           npm pack --pack-destination="../"
 
       - name: Publish to npm.pkg.github.com
-        run: npm publish --registry https://npm.pkg.github.com devextreme-23.2.2-beta.tgz
+        run: npm publish --dry-run ilyakhd-devextreme-23.2.2-beta.tgz
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
