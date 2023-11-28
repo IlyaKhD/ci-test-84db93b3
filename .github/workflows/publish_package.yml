@@ -25,17 +25,6 @@ jobs:
     
       - name: Get tarball from npmjs.org
         run: npm pack devextreme@23.2.2-beta
-          
-      - name: Update package.json
-        working-directory: package
-        run: |
-          sed -i '/\"repository\"/,/}/ d; /^$/d' package.json
-          npm init -y --scope ${{ github.repository_owner }}
-
-      - name: Repack
-        working-directory: package
-        run: |
-          npm pack --pack-destination="../"
 
       - name: Publish to npm.pkg.github.com
         env:
