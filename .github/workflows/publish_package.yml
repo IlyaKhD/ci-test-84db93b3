@@ -31,11 +31,11 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: ls *.tgz | grep --extended-regexp --ignore-case '${{ inputs.pattern }}' |
           while read filename; do
-            tar -xzf ${filename}
-            pushd package
-            sed -i '/\"repository\"/,/}/ d; /^$/d' package.json
-            npm init -y --scope ${{ github.repository_owner }}
-            npm publish --dry-run --registry https://npm.pkg.github.com
-            popd
-            rm -r package
+            tar -xzf ${filename};
+            pushd package;
+            sed -i '/\"repository\"/,/}/ d; /^$/d' package.json;
+            npm init -y --scope ${{ github.repository_owner }};
+            npm publish --dry-run --registry https://npm.pkg.github.com;
+            popd;
+            rm -r package;
           done
