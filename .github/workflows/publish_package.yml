@@ -1,4 +1,4 @@
-name: Publishing to GitHub Packages
+ name: Publishing to GitHub Packages
 
 on:
   workflow_dispatch:
@@ -40,7 +40,7 @@ jobs:
           npm pack --pack-destination="../"
 
       - name: ls
-        run: ls | grep '${{ inputs.pattern }}' |
+        run: ls | grep --extended-regexp --ignore-case '${{ inputs.pattern }}' |
           while read filename; do
             stat ${filename};
           done
