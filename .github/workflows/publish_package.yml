@@ -41,8 +41,8 @@ jobs:
 
       - name: ls
         run: ls | grep '${{ inputs.pattern }}' |
-          while read filename
-          	do stat ${filename}
+          while read filename; do
+            stat ${filename};
           done
 
       # - name: Publish to npm.pkg.github.com
