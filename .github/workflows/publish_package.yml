@@ -24,9 +24,7 @@ jobs:
           always-auth: true
     
       - name: Get tarball from npmjs.org
-        run: |
-          npm pack devextreme@23.2.2-beta
-          tar -xzf devextreme-23.2.2-beta.tgz
+        run: npm pack devextreme@23.2.2-beta
           
       - name: Update package.json
         working-directory: package
@@ -44,5 +42,11 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: ls *.tgz | grep --extended-regexp --ignore-case '${{ inputs.pattern }}' |
           while read filename; do
-            npm publish --dry-run --registry https://npm.pkg.github.com ${filename};
+            tar -xzf ${filename}
+            pushd package
+            sed -i '/\"repository\"/,/}/ d; /^$/d' package.json
+            npm init -y --scope ${{ github.repository_owner }}
+            npm publish --dry-run --registry https://npm.pkg.github.com
+            popd
+            rm -r package
           done
