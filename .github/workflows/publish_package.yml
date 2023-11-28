@@ -33,9 +33,7 @@ jobs:
         working-directory: package
         run: npm init -y --scope ${{ github.repository_owner }}
 
-      - run: cat $NPM_CONFIG_USERCONFIG
-
       - name: Publish to npm.pkg.github.com
-        run: npm publish --dry-run --registry https://npm.pkg.github.com devextreme-23.2.2-beta.tgz
+        run: npm publish --registry https://npm.pkg.github.com devextreme-23.2.2-beta.tgz
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
