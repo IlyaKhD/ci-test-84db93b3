@@ -41,7 +41,7 @@ jobs:
             popd;
             rm -r package;
             mv ${filename} ilyakhd-${filename};
-            npm publish --dry-run --quiet --registry https://npm.pkg.github.com ilyakhd-${filename};
+            npm publish --quiet --registry https://npm.pkg.github.com ilyakhd-${filename};
           done
 
       - run: ls
