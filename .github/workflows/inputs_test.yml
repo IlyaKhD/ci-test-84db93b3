@@ -40,6 +40,6 @@ jobs:
 
       - name: Move 'next' tag 4
         run: |
-          if [ ${{ toJSON(inputs.move-next-tag) }} = true ]; then echo 41;
-          if [ ${{ toJSON(inputs.move-stable-tag) }} = true ]; then echo 42;
+          if [ ${{ toJSON(inputs.move-next-tag) }} = true ]; then echo 41;fi;
+          if [ ${{ toJSON(inputs.move-stable-tag) }} = true ]; then echo 42;fi;
 
