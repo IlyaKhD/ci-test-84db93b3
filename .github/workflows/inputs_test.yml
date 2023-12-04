@@ -37,3 +37,7 @@ jobs:
       - name: Move 'next' tag 3
         if: "${{ inputs.move-next-tag == 'true' }}"
         run: echo 3
+
+      - name: Move 'next' tag 4
+        run: if [ ${{ toJSON(inputs.move-next-tag) }} = true ]; then echo 4; fi
+
