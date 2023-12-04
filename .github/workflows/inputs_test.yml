@@ -1,0 +1,39 @@
+name: Publishing to GitHub Packages
+
+on:
+  workflow_dispatch:
+    inputs:
+      pattern:
+        type: string
+        description: Package file pattern
+        required: false
+      move-next-tag:
+        type: boolean
+        description: Move 'next' tag
+        required: false
+        default: false
+      move-stable-tag:
+        type: boolean
+        description: Move 'stable' tag
+        required: false
+        default: false
+
+jobs:
+
+  publish:
+    name: Publish packages
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Move 'next' tag 1
+        if: "${{ inputs.move-next-tag }}"
+        run: echo 1
+
+      - name: Move 'next' tag 2
+        if: "${{ inputs.move-next-tag == true }}"
+        run: echo 2
+
+      - name: Move 'next' tag 3
+        if: "${{ inputs.move-next-tag == 'true' }}"
+        run: echo 3
