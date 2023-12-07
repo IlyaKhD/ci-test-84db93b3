@@ -16,7 +16,7 @@ jobs:
       files: ${{ steps.step1.outputs.files }}
     steps:
       - id: step1
-        run: ls *.tgz | grep --extended-regexp --ignore-case --regexp='${{ inputs.pattern }}' | sed -r 's/^(.*)$/"\1"/g' | paste -sd "," - | sed -r 's/(.*)/files=[\1]/' >> "$GITHUB_OUTPUT"
+        run: ls | grep --extended-regexp --ignore-case --regexp='${{ inputs.pattern }}' | sed -r 's/^(.*)$/"\1"/g' | paste -sd "," - | sed -r 's/(.*)/files=[\1]/' >> "$GITHUB_OUTPUT"
 
   print:
     name: Print files
