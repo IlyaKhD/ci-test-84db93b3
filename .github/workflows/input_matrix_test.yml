@@ -15,10 +15,12 @@ jobs:
     outputs:
       files: ${{ steps.step1.outputs.files }}
     steps:
+      - name: Get sources
+        uses: actions/checkout@v4
       - id: step1
         run: ls | grep --extended-regexp --ignore-case --regexp='${{ inputs.pattern }}' | sed -r 's/^(.*)$/"\1"/g' | paste -sd "," - | sed -r 's/(.*)/files=[\1]/' >> "$GITHUB_OUTPUT"
-      - run: ls | grep --extended-regexp --ignore-case --regexp='${{ inputs.pattern }}'
       - run: ls
+      - run: ls | grep --extended-regexp --ignore-case --regexp='${{ inputs.pattern }}'
 
   print:
     name: Print files
