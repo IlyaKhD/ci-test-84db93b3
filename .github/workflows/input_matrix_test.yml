@@ -18,7 +18,7 @@ jobs:
       - name: Get sources
         uses: actions/checkout@v4
       - id: step1
-        run: ls | grep --extended-regexp --ignore-case --regexp='${{ inputs.pattern }}' | sed -r 's/^(.*)$/"\1"/g' | paste -sd "," - | sed -r 's/(.*)/files=[\1]/' >> "$GITHUB_OUTPUT"
+        run: ls | grep -E -i '${{ inputs.pattern }}' | sed -r 's/^(.*)$/"\1"/g' | paste -sd "," - | sed -r 's/(.*)/files=[\1]/' >> "$GITHUB_OUTPUT"
       - uses: actions/upload-artifact@v3
         with:
           name: files
