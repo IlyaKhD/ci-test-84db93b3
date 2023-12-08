@@ -26,6 +26,14 @@ jobs:
 
     steps:
 
+      - name: Move 'next' tag -2
+        if: inputs.move-next-tag
+        run: echo -2
+
+      - name: Move 'next' tag -1
+        if: ${{ inputs.move-next-tag }}
+        run: echo -1
+
       - name: Move 'next' tag 1
         if: "${{ inputs.move-next-tag }}"
         run: echo 1
