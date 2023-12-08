@@ -15,8 +15,19 @@ jobs:
     outputs:
       files: ${{ steps.step1.outputs.files }}
     steps:
-      - name: Get sources
-        uses: actions/checkout@v4
+      - name: Create files
+        run: |
+          echo "devextreme-vue-23.2.3.tgz" >> devextreme-vue-23.2.3.tgz
+          echo "devextreme-23.2.3.tgz" >> devextreme-23.2.3.tgz
+          echo "devextreme-angular-23.2.3.tgz" >> devextreme-angular-23.2.3.tgz
+          echo "devextreme-artifacts-23.2.3.tgz" >> devextreme-artifacts-23.2.3.tgz
+          echo "devextreme-dist-23.2.3.tgz" >> devextreme-dist-23.2.3.tgz
+          echo "devextreme-dist-internal-23.2.3.tgz" >> devextreme-dist-internal-23.2.3.tgz
+          echo "devextreme-internal-23.2.3.tgz" >> devextreme-internal-23.2.3.tgz
+          echo "devextreme-react-23.2.3.tgz" >> devextreme-react-23.2.3.tgz
+          echo "devextreme-themebuilder-23.2.3.tgz" >> devextreme-themebuilder-23.2.3.tgz
+      # - name: Get sources
+      #   uses: actions/checkout@v4
       - id: step1
         run: ls | grep -E -i '${{ inputs.pattern }}' | sed -r 's/^(.*)$/"\1"/g' | paste -sd "," - | sed -r 's/(.*)/files=[\1]/' >> "$GITHUB_OUTPUT"
       - uses: actions/upload-artifact@v3
