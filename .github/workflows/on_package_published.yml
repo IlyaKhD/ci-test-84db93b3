@@ -1,7 +1,6 @@
 name: Making Something on Package Pubished
 
 on:
-  package:
   registry_package:
 
 jobs:
