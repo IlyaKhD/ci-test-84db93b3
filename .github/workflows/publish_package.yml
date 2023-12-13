@@ -36,12 +36,10 @@ jobs:
             tar -xzf ${filename};
             pushd package;
             sed -i '/\"repository\"/,/}/ d; /^$/d' package.json;
-            cat package.json;
-            npm pack --pack-destination="../";
+            npm init -y --scope ${{ github.repository_owner }};
+            npm publish --dry-run --quiet --registry https://npm.pkg.github.com;
             popd;
             rm -r package;
-            mv ${filename} ilyakhd-${filename};
-            npm publish --quiet --registry https://npm.pkg.github.com ilyakhd-${filename};
           done
 
       - run: ls
