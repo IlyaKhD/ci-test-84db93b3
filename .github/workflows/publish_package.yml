@@ -37,7 +37,7 @@ jobs:
             pushd package;
             sed -i '/\"repository\"/,/}/ d; /^$/d' package.json;
             npm init -y --scope ${{ github.repository_owner }};
-            npm publish --dry-run --quiet --registry https://npm.pkg.github.com;
+            npm publish --quiet --registry https://npm.pkg.github.com;
             popd;
             rm -r package;
           done
