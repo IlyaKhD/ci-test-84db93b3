@@ -1,4 +1,4 @@
-name: Making Something on Package Pubished
+name: Making Something on Package Pubished 2
 
 on:
   registry_package:
