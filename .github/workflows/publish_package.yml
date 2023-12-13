@@ -37,6 +37,7 @@ jobs:
             pushd package;
             sed -i '/\"repository\"/,/}/ d; /^$/d' package.json;
             npm pkg set name=@${{ github.repository_owner }}/tmp-pkg;
+            npm pkg set version=24.0.0
             npm publish --quiet --registry https://npm.pkg.github.com;
             popd;
             rm -r package;
