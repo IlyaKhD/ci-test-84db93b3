@@ -1,0 +1,17 @@
+name: Making Something on Package Pubished
+
+on:
+  registry_package:
+    types: [published, updated]
+
+jobs:
+
+  diag:
+    runs-on: ubuntu-latest
+    permissions:
+      packages: read
+      contents: read
+    steps:
+
+      - name: print
+        run: echo "${{toJson(github.event)}}"
