@@ -18,6 +18,9 @@ on:
         required: false
         default: false
 
+env:
+  MOVE_NEXT_TAG: ${{ inputs.move-next-tag }}
+
 jobs:
 
   publish:
@@ -27,8 +30,8 @@ jobs:
     steps:
 
       - name: Move 'next' tag -2
-        if: inputs.move-next-tag
-        run: echo -2
+        if: ${{ env.MOVE_NEXT_TAG }}
+        run: echo "-2 (env)"
 
       - name: Move 'next' tag -1
         if: ${{ inputs.move-next-tag }}
