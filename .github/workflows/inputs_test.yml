@@ -31,7 +31,7 @@ jobs:
 
       - name: Move 'next' tag -2
         if: ${{ env.MOVE_NEXT_TAG }}
-        run: echo "-2 (env)"
+        run: echo "$MOVE_NEXT_TAG"
 
       - name: Move 'next' tag -1
         if: ${{ inputs.move-next-tag }}
