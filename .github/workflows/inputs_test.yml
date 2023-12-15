@@ -28,7 +28,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-
+      - run: echo "${{ toJson(inputs.move-next-tag) }}
+      
       - name: Move 'next' tag -7
         if: ${{ env.MOVE_NEXT_TAG == 'true' }}
         run: echo "$MOVE_NEXT_TAG"
