@@ -32,6 +32,8 @@ jobs:
       - name: Get sources
         uses: actions/checkout@v4
 
+      - run: ls
+      - run: ls | grep -E -i ''
       - run: ls | grep -E -i '$FILTER'
       - run: echo "${{ toJson(inputs.move-next-tag) }}"
       - run: echo "${{ github.event_name }}"
