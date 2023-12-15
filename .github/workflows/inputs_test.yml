@@ -19,7 +19,7 @@ on:
         default: false
 
 env:
-  MOVE_NEXT_TAG: ${{ (github.event_name == 'workflow_dispatch' && inputs.move-next-tag) || (github.event_name != 'workflow_dispatch' && true) }}
+  MOVE_NEXT_TAG: ${{ (github.event_name == 'workflow_dispatch2' && inputs.move-next-tag) || (github.event_name != 'workflow_dispatch2' && true) }}
 
 jobs:
 
