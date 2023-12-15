@@ -29,9 +29,22 @@ jobs:
 
     steps:
 
-      - name: Move 'next' tag -2
+      - name: Move 'next' tag -5
+        if: env.MOVE_NEXT_TAG == true
+        run: echo "$MOVE_NEXT_TAG"
+
+      - name: Move 'next' tag -4
+        if: ${{ env.MOVE_NEXT_TAG == true }}
+        run: echo "$MOVE_NEXT_TAG"
+
+      - name: Move 'next' tag -3
         if: ${{ env.MOVE_NEXT_TAG }}
         run: echo "$MOVE_NEXT_TAG"
+
+      - name: Move 'next' tag -2
+        if: env.MOVE_NEXT_TAG
+        run: echo "$MOVE_NEXT_TAG"
+
 
       - name: Move 'next' tag -1
         if: ${{ inputs.move-next-tag }}
