@@ -3,7 +3,7 @@ name: Inputs Test
 on:
   workflow_dispatch:
     inputs:
-      pattern:
+      filter:
         type: string
         description: Package file pattern
         required: false
@@ -19,6 +19,7 @@ on:
         default: false
 
 env:
+  FILTER: ${{ (github.event_name == 'workflow_dispatch' && inputs.filter) || (github.event_name != 'workflow_dispatch' && '') }}
   MOVE_NEXT_TAG: ${{ (github.event_name == 'workflow_dispatch' && inputs.move-next-tag) || (github.event_name != 'workflow_dispatch' && true) }}
 
 jobs:
@@ -28,6 +29,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - run: ls | grep -E -i '$FILTER'
       - run: echo "${{ toJson(inputs.move-next-tag) }}"
       - run: echo "${{ github.event_name }}"
       - run: echo "$MOVE_NEXT_TAG"
