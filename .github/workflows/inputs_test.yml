@@ -19,7 +19,7 @@ on:
         default: false
 
 env:
-  MOVE_NEXT_TAG: ${{ inputs.move-next-tag }}
+  MOVE_NEXT_TAG: ${{ github.event_name == 'workflow_dispatch' && inputs.move-next-tag || true }}
 
 jobs:
 
@@ -28,7 +28,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - run: echo "${{ toJson(inputs.move-next-tag) }}
+      - run: echo "${{ toJson(inputs.move-next-tag) }}"
+      - run: echo "${{ github.event_name }}"
+      - run: echo "$MOVE_NEXT_TAG"
       
       - name: Move 'next' tag -7
         if: ${{ env.MOVE_NEXT_TAG == 'true' }}
