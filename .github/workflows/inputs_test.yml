@@ -32,6 +32,7 @@ jobs:
       - name: Get sources
         uses: actions/checkout@v4
 
+      - run: echo "$FILTER"
       - run: ls
       - run: ls | grep -E -i ''
       - run: ls | grep -E -i "$FILTER"
