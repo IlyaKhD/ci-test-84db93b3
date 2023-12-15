@@ -20,7 +20,7 @@ on:
         default: false
 
 env:
-  FILTER: ${{ (github.event_name == 'workflow_dispatch' && inputs.filter) || (github.event_name != 'workflow_dispatch' && '') }}
+  FILTER: ${{ (github.event_name == 'workflow_dispatch' && (inputs.filter || '')) || (github.event_name != 'workflow_dispatch' && '') }}
   MOVE_NEXT_TAG: ${{ (github.event_name == 'workflow_dispatch' && inputs.move-next-tag) || (github.event_name != 'workflow_dispatch' && true) }}
 
 jobs:
