@@ -30,7 +30,7 @@ jobs:
     steps:
 
       - name: Move 'next' tag -7
-        if: ${{ env.MOVE_NEXT_TAG == "true" }}
+        if: ${{ env.MOVE_NEXT_TAG == 'true' }}
         run: echo "$MOVE_NEXT_TAG"
 
       - name: Move 'next' tag -6
