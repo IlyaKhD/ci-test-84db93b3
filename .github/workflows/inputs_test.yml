@@ -29,6 +29,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Get sources
+        uses: actions/checkout@v4
+
       - run: ls | grep -E -i '$FILTER'
       - run: echo "${{ toJson(inputs.move-next-tag) }}"
       - run: echo "${{ github.event_name }}"
