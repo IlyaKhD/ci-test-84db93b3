@@ -18,9 +18,11 @@ jobs:
         echo $E2;
     
     - name: Define variables
-      run: echo "Tags are > ${PUSH_TAG_VERSION}"
       env:
         # var logic
         DOCKERHUB_USER: devmtl
-        APP_NAME: $(cat Dockerfile | grep APP_NAME= | head -n 1 | grep -o '".*"' | sed 's/"//g')
-        VERSION: $(cat Dockerfile | grep VERSION= | head -n 1 | grep -o '".*"' | sed 's/"//g')
+        APP_NAME: $(echo 123)
+        VERSION: $(ls | grep -o '".*"' | sed 's/"//g')
+      run: |
+        echo $APP_NAME;
+        echo $VERSION;
