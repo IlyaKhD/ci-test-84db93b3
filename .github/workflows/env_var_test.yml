@@ -16,13 +16,4 @@ jobs:
         E2=$(echo "$E1" | tr '[:upper:]' '[:lower:]')
         echo $E1;
         echo $E2;
-    
-    - name: Define variables
-      env:
-        # var logic
-        DOCKERHUB_USER: devmtl
-        APP_NAME: $(echo 123)
-        VERSION: $(ls | grep -o '".*"' | sed 's/"//g')
-      run: |
-        echo $APP_NAME;
-        echo $VERSION;
+        echo "$E1-$E2";
