@@ -1,0 +1,18 @@
+name: Env Variables Test
+
+on:
+  workflow_dispatch:
+
+jobs:
+
+  job1:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: step1
+      env:
+        E1: ${{ github.repository_owner }}
+        E2: $(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
+      run: |
+        echo $E1;
+        echo $E2;
