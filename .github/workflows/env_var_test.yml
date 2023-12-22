@@ -12,9 +12,8 @@ jobs:
     - name: step1
       env:
         E1: ${{ github.repository_owner }}
-        E2: $(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
       run: | 
-        E2=$(echo $E1 | tr '[:upper:]' '[:lower:]'))
+        E2=$(echo $E1 | tr '[:upper:]' '[:lower:]')
         echo $E1;
         echo $E2;
     
