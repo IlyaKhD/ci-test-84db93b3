@@ -12,7 +12,9 @@ jobs:
     - name: Get sources
       uses: actions/checkout@v4
       with:
-        sparse-checkout: /scripts
+        sparse-checkout: |
+          /scripts
+          package.json
         sparse-checkout-cone-mode: false
     - run: npm i
     - name: step1
