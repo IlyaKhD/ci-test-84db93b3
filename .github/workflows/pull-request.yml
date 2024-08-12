@@ -6,6 +6,9 @@ on:
       - reopened
       - labeled
       - unlabeled
+    paths:
+      - '**'
+      - '!**/*.md'
 jobs:
 
   semver-label:
