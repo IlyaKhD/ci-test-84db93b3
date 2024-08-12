@@ -6,9 +6,18 @@ on:
       - reopened
       - labeled
       - unlabeled
-    paths-ignore:
-      - '**/*.md'
 jobs:
+
+  print:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Print PR meta
+        run: |
+          echo ${{github.event.before}}
+          echo ${{github.sha}}
+          echo ${{github.event.pull_request.files}}
+          echo ${{github.event.pull_request.changed_files}}
 
   semver-label:
     name: Semver label
