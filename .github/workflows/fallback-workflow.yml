@@ -1,0 +1,13 @@
+name: Fallback Workflow
+
+on:
+  pull_request:
+
+jobs:
+  report-status:
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Report success
+        run: echo "Fallback workflow completed successfully."
