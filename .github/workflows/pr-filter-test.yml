@@ -11,11 +11,11 @@ jobs:
 
       - name: Get sources
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: fetch
         run: git fetch origin
-        with:
-          fetch-depth: 0
 
       - name: History
         run: git log -n 10 --pretty=format:"%H"
