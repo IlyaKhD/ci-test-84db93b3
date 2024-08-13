@@ -9,8 +9,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
-      # - name: Print Base Ref 1
-      #   run: echo "Base ref: ${{ github.event.pull_request.base.ref }}"
+      - name: Print Base Ref 1
+        run: echo "Base ref: ${{ github.event.pull_request.base.ref }}"
 
       - name: Get sources
         uses: actions/checkout@v4
