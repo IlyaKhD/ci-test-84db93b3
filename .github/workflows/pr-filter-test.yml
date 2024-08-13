@@ -14,6 +14,8 @@ jobs:
 
       - name: fetch
         run: git fetch origin
+        with:
+          fetch-depth: 0
 
       - name: History
         run: git log -n 10 --pretty=format:"%H"
