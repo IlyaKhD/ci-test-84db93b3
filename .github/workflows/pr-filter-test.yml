@@ -21,7 +21,7 @@ jobs:
         id: prFilter
         uses: ./.github/actions/pr-filter
         with:
-          paths: ['abc']
+          paths: 'abc;def;!**/*.md'
 
       - name: Check PR has one severity label
         if: steps.prFilter.outputs.result == 'false'
