@@ -9,6 +9,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
+      - name: Get sources
+        uses: actions/checkout@v4
+
       - name: PR Filter
         id: prFilter
         uses: ./.github/actions/pr-filter
