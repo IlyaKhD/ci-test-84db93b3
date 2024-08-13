@@ -1,11 +1,6 @@
 name: PR Filter Test
 on:
   pull_request:
-    types: 
-      - opened
-      - reopened
-      - labeled
-      - unlabeled
 
 jobs:
 
