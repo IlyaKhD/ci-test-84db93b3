@@ -1,0 +1,24 @@
+name: PR Filter Test
+on:
+  pull_request:
+    types: 
+      - opened
+      - reopened
+      - labeled
+      - unlabeled
+
+jobs:
+
+  job1:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: PR Filter
+        id: prFilter
+        uses: ./.github/actions/pr-filter
+
+      - name: Check PR has one severity label
+        if: steps.prFilter.outputs.result == 'false'
+        
+        run: |
+          echo 123
