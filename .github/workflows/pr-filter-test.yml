@@ -14,8 +14,8 @@ jobs:
 
       - name: Get sources
         uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.pull_request.base.ref }}
+#        with:
+#          ref: ${{ github.event.pull_request.base.ref }}
 
       - name: Print Base Ref 2
         run: echo "Base ref: ${{ github.event.pull_request.base.ref }}"
