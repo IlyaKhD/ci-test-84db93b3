@@ -12,7 +12,7 @@ jobs:
       - name: Get sources
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 2
 
       - name: fetch
         run: git fetch origin
