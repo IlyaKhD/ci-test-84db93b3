@@ -10874,8 +10874,8 @@
   function run() {
       return __awaiter(this, void 0, void 0, function* () {
           try {
-              const pathFilter = core.getInput('paths');
-              console.log(JSON.stringify(pathFilter, undefined, 4));
+              const globs = core.getInput('paths').split(';');
+              console.log(JSON.stringify(globs, undefined, 4));
               const { head, base } = yield (0, common_1.getPrRevisionRange)();
               core.info(`Base commit: ${base}`);
               core.info(`Head commit: ${head}`);

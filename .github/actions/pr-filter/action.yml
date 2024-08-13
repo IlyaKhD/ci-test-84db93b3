@@ -3,7 +3,7 @@ description: Checks if PR meets certian criteria
 
 inputs:
   paths:
-    description: Changed files paths filter
+    description: Semicolon separated globs
     required: false
 
 runs:
