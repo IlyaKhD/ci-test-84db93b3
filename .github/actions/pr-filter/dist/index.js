@@ -10956,12 +10956,11 @@
               const filteredFiles = changedFiles.filter(file => {
                   let result = false;
                   for (const pattern of pathPatterns) {
-                      if (pattern.startsWith(NEGATION)) {
-                          result && (result = (0, minimatch_1.minimatch)(file, pattern.substring(1)));
-                      }
-                      else {
-                          result || (result = (0, minimatch_1.minimatch)(file, pattern));
-                      }
+                      // if(pattern.startsWith(NEGATION)) { 
+                      //     result &&= minimatch(file, pattern.substring(1));
+                      // } else {
+                      result || (result = (0, minimatch_1.minimatch)(file, pattern));
+                      // }
                   }
               });
               console.log(`all files [${changedFiles.length}]:`);
