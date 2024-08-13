@@ -20,6 +20,8 @@ jobs:
       - name: PR Filter
         id: prFilter
         uses: ./.github/actions/pr-filter
+        with:
+          paths: ['abc']
 
       - name: Check PR has one severity label
         if: steps.prFilter.outputs.result == 'false'
