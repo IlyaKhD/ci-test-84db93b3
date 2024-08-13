@@ -10879,6 +10879,8 @@
               const { head, base } = yield (0, common_1.getPrRevisionRange)();
               core.info(`Base commit: ${base}`);
               core.info(`Head commit: ${head}`);
+              const wordDiff = yield (0, common_1.execCommand)(`git diff --word-diff ${base} ${head}`);
+              console.log(JSON.stringify(wordDiff));
               const diff = yield (0, common_1.execCommand)(`git diff --name-only ${base} ${head}`);
               const changedFiles = diff.split('\n');
               console.log(JSON.stringify(changedFiles, undefined, 4));
