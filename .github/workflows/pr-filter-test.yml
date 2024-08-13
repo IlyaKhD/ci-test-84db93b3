@@ -12,6 +12,9 @@ jobs:
       - name: Get sources
         uses: actions/checkout@v4
 
+      - name: History
+        run: git log -n 10 --pretty=format:"%H"
+
       - name: PR Filter
         id: prFilter
         uses: ./.github/actions/pr-filter
