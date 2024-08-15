@@ -6,8 +6,10 @@ on:
 
 jobs:
 
-  job1:
+  prFilter:
     runs-on: ubuntu-latest
+    outputs:
+      output1: ${{ steps.step1.outputs.test }}
     steps:
 
       - name: Get sources
@@ -15,19 +17,14 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: History
-        run: git log -n 10 --pretty=format:"%H"
-
-      - name: PR Filter
-        id: prFilter
+      - name: Filter
+        id: filter
         uses: ./.github/actions/pr-filter
         with:
           paths: '**;!**/*.md'
 
-      - run: echo ${{steps.prFilter.outputs.result}}
-
-      - name: Run step if paths filter met
-        if: steps.prFilter.outputs.result == 'true'
-        
-        run: |
-          echo 123
+  job2:
+    runs-on: ubuntu-latest
+    needs: job1
+    
+      - run: echo 123
