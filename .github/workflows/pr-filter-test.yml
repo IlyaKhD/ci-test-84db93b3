@@ -24,6 +24,8 @@ jobs:
         with:
           paths: '**;!**/*.md'
 
+      - run: echo ${{steps.prFilter.outputs.result}}
+
       - name: Run step if paths filter met
         if: steps.prFilter.outputs.result == true
         
