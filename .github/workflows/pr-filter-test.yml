@@ -23,8 +23,10 @@ jobs:
         with:
           paths: '**;!**/*.md'
 
+      - run: echo ${{ steps.filter.outputs.test }}
+
       - name: Print
-        if: steps.filter.outputs.test == 'true'
+        if: ${{ steps.filter.outputs.test == 'true' }}
         
         run: |
           echo 123
