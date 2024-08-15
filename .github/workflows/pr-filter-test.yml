@@ -23,7 +23,7 @@ jobs:
         with:
           paths: '**;!**/*.md'
 
-      - run: echo ${{ steps.filter.outputs.test }}
+      - run: echo ${{ steps.filter.outputs.result }}
 
       - name: Print
         if: ${{ steps.filter.outputs.result == 'true' }}
