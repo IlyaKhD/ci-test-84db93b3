@@ -24,7 +24,7 @@ jobs:
           paths: '**;!**/*.md'
 
   job2:
-    needs: job1
+    needs: prFilter
     if: needs.prFilter.outputs.success
     runs-on: ubuntu-latest
 
