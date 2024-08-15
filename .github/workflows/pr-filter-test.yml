@@ -25,7 +25,7 @@ jobs:
           paths: '**;!**/*.md'
 
       - name: Run step if paths filter met
-        if: steps.prFilter.outputs.result == 'true'
+        if: steps.prFilter.outputs.result == true
         
         run: |
           echo 123
