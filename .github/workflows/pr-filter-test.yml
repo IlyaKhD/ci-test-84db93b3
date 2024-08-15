@@ -9,10 +9,10 @@ jobs:
   prFilter:
     runs-on: ubuntu-latest
     outputs:
-      success: ${{ steps.step1.outputs.test }}
+      success: ${{ steps.filter.outputs.test }}
     steps:
 
-      - name: Get sources
+      - name: Checkout
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
