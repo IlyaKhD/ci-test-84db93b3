@@ -27,7 +27,7 @@ jobs:
       - run: echo ${{steps.prFilter.outputs.result}}
 
       - name: Run step if paths filter met
-        if: steps.prFilter.outputs.result == true
+        if: steps.prFilter.outputs.result == 'true'
         
         run: |
           echo 123
