@@ -33,7 +33,7 @@ jobs:
 
   job2:
     needs: prFilter
-    if: ${{ needs.prFilter.outputs.success == 'true' }}
+    if: needs.prFilter.outputs.success
     runs-on: ubuntu-latest
 
     steps:
