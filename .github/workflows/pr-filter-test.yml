@@ -9,7 +9,7 @@ jobs:
   prFilter:
     runs-on: ubuntu-latest
     outputs:
-      output1: ${{ steps.step1.outputs.test }}
+      success: ${{ steps.step1.outputs.test }}
     steps:
 
       - name: Get sources
@@ -24,7 +24,9 @@ jobs:
           paths: '**;!**/*.md'
 
   job2:
-    runs-on: ubuntu-latest
     needs: job1
-    
+    if: needs.prFilter.outputs.success
+    runs-on: ubuntu-latest
+
+    steps:
       - run: echo 123
