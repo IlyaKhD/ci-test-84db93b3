@@ -24,8 +24,8 @@ jobs:
         with:
           paths: '**;!**/*.md'
 
-      - name: Check PR has one severity label
-        if: steps.prFilter.outputs.result == 'false'
+      - name: Run step if paths filter met
+        if: steps.prFilter.outputs.result == 'true'
         
         run: |
           echo 123
