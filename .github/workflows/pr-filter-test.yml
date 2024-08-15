@@ -23,9 +23,15 @@ jobs:
         with:
           paths: '**;!**/*.md'
 
+      - name: Print
+        if: steps.filter.outputs.test == 'true'
+        
+        run: |
+          echo 123
+
   job2:
     needs: prFilter
-    if: ${{ needs.prFilter.outputs.success }}
+    if: ${{ needs.prFilter.outputs.success == 'true' }}
     runs-on: ubuntu-latest
 
     steps:
