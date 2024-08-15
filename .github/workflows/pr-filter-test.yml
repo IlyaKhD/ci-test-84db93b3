@@ -6,26 +6,28 @@ on:
 
 jobs:
 
-  job1:
+  prFilter:
     runs-on: ubuntu-latest
+    outputs:
+      success: ${{ steps.filter.outputs.result }}
     steps:
 
-      - name: Get sources
+      - name: Checkout
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: History
-        run: git log -n 10 --pretty=format:"%H"
-
-      - name: PR Filter
-        id: prFilter
+      - name: Filter
+        id: filter
         uses: ./.github/actions/pr-filter
         with:
           paths: '**;!**/*.md'
 
-      - name: Check PR has one severity label
-        if: steps.prFilter.outputs.result == 'false'
-        
-        run: |
-          echo 123
+
+  job2:
+    needs: prFilter
+    if: needs.prFilter.outputs.success == 'true'
+    runs-on: ubuntu-latest
+
+    steps:
+      - run: echo 123
