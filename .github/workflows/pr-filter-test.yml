@@ -9,7 +9,7 @@ jobs:
   prFilter:
     runs-on: ubuntu-latest
     outputs:
-      success: ${{ steps.filter.outputs.result }}
+      success: steps.filter.outputs.result
     steps:
 
       - name: Checkout
@@ -23,13 +23,6 @@ jobs:
         with:
           paths: '**;!**/*.md'
 
-      - run: echo ${{ steps.filter.outputs.result }}
-
-      - name: Print
-        if: ${{ steps.filter.outputs.result == 'true' }}
-        
-        run: |
-          echo 123
 
   job2:
     needs: prFilter
