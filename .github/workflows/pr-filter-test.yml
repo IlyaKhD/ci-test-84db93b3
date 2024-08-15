@@ -1,7 +1,6 @@
 name: PR Filter Test
 on:
   push:
-    branches: master
   pull_request:
 
 jobs:
@@ -22,7 +21,7 @@ jobs:
         id: prFilter
         uses: ./.github/actions/pr-filter
         with:
-          paths: ['abc']
+          paths: '**;!**/*.md'
 
       - name: Check PR has one severity label
         if: steps.prFilter.outputs.result == 'false'
