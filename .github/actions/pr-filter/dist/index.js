@@ -11240,7 +11240,7 @@
               const diffOutput = yield (0, common_1.execCommand)(`git diff --name-only ${base} ${head}`);
               const changedFiles = diffOutput.split('\n');
               const filteredFiles = (0, common_1.filterFiles)(changedFiles, pathPatterns);
-              core.setOutput(OUTPUT_RESULT, common_1.filterFiles.length > 0);
+              core.setOutput(OUTPUT_RESULT, filteredFiles.length > 0);
               console.log(`changed files [${changedFiles.length}]:`);
               console.log(JSON.stringify(changedFiles, undefined, 4));
               console.log(`filtered files [${filteredFiles.length}]:`);
