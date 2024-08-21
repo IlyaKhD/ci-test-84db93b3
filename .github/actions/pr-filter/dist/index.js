@@ -32,34 +32,6 @@
   
   /***/ }),
   
-  /***/ 36:
-  /***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
-  
-  "use strict";
-  
-  Object.defineProperty(exports, "__esModule", ({ value: true }));
-  exports.filterFiles = void 0;
-  const minimatch_1 = __nccwpck_require__(148);
-  const NEGATION = '!';
-  function filterFiles(files, patterns) {
-      return files.filter(file => {
-          let result = false;
-          for (const pattern of patterns) {
-              if (pattern.startsWith(NEGATION)) {
-                  result && (result = !(0, minimatch_1.minimatch)(file, pattern.substring(1)));
-              }
-              else {
-                  result || (result = (0, minimatch_1.minimatch)(file, pattern));
-              }
-          }
-          return result;
-      });
-  }
-  exports.filterFiles = filterFiles;
-  
-  
-  /***/ }),
-  
   /***/ 9145:
   /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
   
@@ -81,8 +53,31 @@
   };
   Object.defineProperty(exports, "__esModule", ({ value: true }));
   __exportStar(__nccwpck_require__(3120), exports);
-  __exportStar(__nccwpck_require__(36), exports);
+  __exportStar(__nccwpck_require__(3562), exports);
   __exportStar(__nccwpck_require__(3400), exports);
+  
+  
+  /***/ }),
+  
+  /***/ 3562:
+  /***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+  
+  "use strict";
+  
+  Object.defineProperty(exports, "__esModule", ({ value: true }));
+  exports.filterPaths = void 0;
+  const minimatch_1 = __nccwpck_require__(148);
+  const NEGATION = '!';
+  function filterPaths(paths, patterns) {
+      return paths.filter(path => {
+          return patterns.reduce((prevResult, pattern) => {
+              return pattern.startsWith(NEGATION)
+                  ? prevResult && !(0, minimatch_1.minimatch)(path, pattern.substring(1))
+                  : prevResult || (0, minimatch_1.minimatch)(path, pattern);
+          }, false);
+      });
+  }
+  exports.filterPaths = filterPaths;
   
   
   /***/ }),
@@ -92,6 +87,29 @@
   
   "use strict";
   
+  var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+      if (k2 === undefined) k2 = k;
+      var desc = Object.getOwnPropertyDescriptor(m, k);
+      if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+        desc = { enumerable: true, get: function() { return m[k]; } };
+      }
+      Object.defineProperty(o, k2, desc);
+  }) : (function(o, m, k, k2) {
+      if (k2 === undefined) k2 = k;
+      o[k2] = m[k];
+  }));
+  var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+      Object.defineProperty(o, "default", { enumerable: true, value: v });
+  }) : function(o, v) {
+      o["default"] = v;
+  });
+  var __importStar = (this && this.__importStar) || function (mod) {
+      if (mod && mod.__esModule) return mod;
+      var result = {};
+      if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+      __setModuleDefault(result, mod);
+      return result;
+  };
   var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
       function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
       return new (P || (P = Promise))(function (resolve, reject) {
@@ -102,15 +120,26 @@
       });
   };
   Object.defineProperty(exports, "__esModule", ({ value: true }));
-  exports.getPrRevisionRange = void 0;
+  exports.getRange = exports.getPrRevisionRange = void 0;
+  const core = __importStar(__nccwpck_require__(5316));
   const github_1 = __nccwpck_require__(2189);
   const common_utils_1 = __nccwpck_require__(3120);
   function getPrRevisionRange() {
+      return __awaiter(this, void 0, void 0, function* () {
+          return getRange().then((r) => {
+              core.info(`Base commit: ${r.base}`);
+              core.info(`Head commit: ${r.head}`);
+              return r;
+          });
+      });
+  }
+  exports.getPrRevisionRange = getPrRevisionRange;
+  function normalizeCommit(commit) {
+      return commit === '0000000000000000000000000000000000000000' ? 'HEAD^' : commit;
+  }
+  function getRange() {
       var _a, _b, _c, _d;
       return __awaiter(this, void 0, void 0, function* () {
-          const normalizeCommit = (commit) => {
-              return commit === '0000000000000000000000000000000000000000' ? 'HEAD^' : commit;
-          };
           switch (github_1.context.eventName) {
               case 'pull_request':
                   const baseBranch = (_b = (_a = github_1.context.payload.pull_request) === null || _a === void 0 ? void 0 : _a.base) === null || _b === void 0 ? void 0 : _b.ref;
@@ -129,7 +158,7 @@
           }
       });
   }
-  exports.getPrRevisionRange = getPrRevisionRange;
+  exports.getRange = getRange;
   
   
   /***/ }),
@@ -11235,11 +11264,9 @@
               const pathPatterns = core.getInput(INPUT_PATHS).split(';');
               console.log(JSON.stringify(pathPatterns, undefined, 4));
               const { head, base } = yield (0, common_1.getPrRevisionRange)();
-              core.info(`Base commit: ${base}`);
-              core.info(`Head commit: ${head}`);
               const diffOutput = yield (0, common_1.execCommand)(`git diff --name-only ${base} ${head}`);
               const changedFiles = diffOutput.split('\n');
-              const filteredFiles = (0, common_1.filterFiles)(changedFiles, pathPatterns);
+              const filteredFiles = (0, common_1.filterPaths)(changedFiles, pathPatterns);
               core.setOutput(OUTPUT_RESULT, filteredFiles.length > 0);
               console.log(`changed files [${changedFiles.length}]:`);
               console.log(JSON.stringify(changedFiles, undefined, 4));
