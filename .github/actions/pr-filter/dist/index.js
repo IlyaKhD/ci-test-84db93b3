@@ -68,12 +68,18 @@
   exports.filterPaths = void 0;
   const minimatch_1 = __nccwpck_require__(148);
   const NEGATION = '!';
+  const matchOptions = {
+      dot: true,
+  };
+  function match(path, pattern) {
+      return (0, minimatch_1.minimatch)(path.replace(/\\/g, '/'), pattern, matchOptions);
+  }
   function filterPaths(paths, patterns) {
       return paths.filter(path => {
           return patterns.reduce((prevResult, pattern) => {
               return pattern.startsWith(NEGATION)
-                  ? prevResult && !(0, minimatch_1.minimatch)(path, pattern.substring(1))
-                  : prevResult || (0, minimatch_1.minimatch)(path, pattern);
+                  ? prevResult && !match(path, pattern.substring(1))
+                  : prevResult || match(path, pattern);
           }, false);
       });
   }
