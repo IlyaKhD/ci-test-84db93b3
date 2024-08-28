@@ -1,4 +1,4 @@
-name: PR Filter Test
+name: Log Commit Tets
 on:
   push:
     branches: master
@@ -6,10 +6,8 @@ on:
 
 jobs:
 
-  job1:
+  log-commit-test:
     runs-on: ubuntu-latest
-    outputs:
-      success: ${{ steps.filter.outputs.result }}
     steps:
 
       - name: Checkout
