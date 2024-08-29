@@ -37,7 +37,6 @@ jobs:
     strategy:
       matrix:
         a: ['a', 'b']
-        b: [0, 1]
 
     steps:
       - run: echo ${{ matrix.a }} - ${{ matrix.b }}
