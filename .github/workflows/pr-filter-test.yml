@@ -33,7 +33,6 @@ jobs:
   filteredMatrixJob:
     name: Filtered Matrix Job ${{ matrix.a }} - ${{ matrix.b }}
     needs: prFilter
-    if: needs.prFilter.outputs.success == 'true'
     runs-on: ubuntu-latest
     strategy:
       matrix:
