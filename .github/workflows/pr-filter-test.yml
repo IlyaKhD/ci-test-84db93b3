@@ -43,3 +43,17 @@ jobs:
     steps:
       - run: echo ${{ matrix.a }} - ${{ matrix.b }}
       - run: exit 0
+
+  filteredMatrixJobStup:
+    name: Filtered Matrix Job ${{ matrix.a }} - ${{ matrix.b }}
+    needs: prFilter
+    if: needs.prFilter.outputs.success != 'true'
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        a: ['a', 'b']
+        b: [0, 1]
+
+    steps:
+      - run: echo ${{ matrix.a }} - ${{ matrix.b }} - stub
+      - run: exit 0
