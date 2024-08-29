@@ -19,7 +19,7 @@ jobs:
         id: filter
         uses: ./.github/actions/pr-filter
         with:
-          paths: '**;!**/*.md'
+          paths: '**;!**/*.md;!**/*.yml'
 
 
   filteredJob:
