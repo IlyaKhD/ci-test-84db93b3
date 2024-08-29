@@ -1,4 +1,4 @@
-name: PR Filter Test
+name: PR Filter Test Stub
 on:
   push:
     branches: master
@@ -21,7 +21,7 @@ jobs:
         with:
           paths: '**;!**/*.md;!**/*.yml'
 
-  filteredMatrixJobStup:
+  filteredMatrixJobStub:
     name: Filtered Matrix Job ${{ matrix.a }} - ${{ matrix.b }}
     needs: prFilter
     if: needs.prFilter.outputs.success != 'true'
