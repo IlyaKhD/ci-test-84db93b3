@@ -21,19 +21,10 @@ jobs:
         with:
           paths: '**;!**/*.md;!**/*.yml'
 
-
-  filteredJob:
-    needs: prFilter
-    if: needs.prFilter.outputs.success == 'true'
-    runs-on: ubuntu-latest
-
-    steps:
-      - run: echo 123
-
-  filteredMatrixJob:
+  filteredMatrixJobStup:
     name: Filtered Matrix Job ${{ matrix.a }} - ${{ matrix.b }}
     needs: prFilter
-    if: needs.prFilter.outputs.success == 'true'
+    if: needs.prFilter.outputs.success != 'true'
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -41,5 +32,5 @@ jobs:
         b: [0, 1]
 
     steps:
-      - run: echo ${{ matrix.a }} - ${{ matrix.b }}
-      - run: exit ${{ matrix.b }}
+      - run: echo ${{ matrix.a }} - ${{ matrix.b }} - stub
+      - run: exit 0
