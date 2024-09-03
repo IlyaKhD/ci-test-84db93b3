@@ -24,7 +24,7 @@ jobs:
   anotherMatrixJobStub:
     name: Another Matrix Job ${{ matrix.a }} - ${{ matrix.b }}
     needs: prFilter
-    if: ${{matrix.a}} == 'a'
+    if: always()
     runs-on: ubuntu-latest
     strategy:
       matrix:
