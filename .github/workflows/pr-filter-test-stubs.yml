@@ -21,6 +21,20 @@ jobs:
         with:
           paths: '**;!**/*.md;!**/*.yml'
 
+  anotherMatrixJobStub:
+    name: Another Matrix Job ${{ matrix.a }} - ${{ matrix.b }}
+    needs: prFilter
+    if: ${{matrix.a}} == 'a'
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        a: ['a', 'b']
+        b: [0, 1]
+
+    steps:
+      - run: echo ${{ matrix.a }} - ${{ matrix.b }} - stub
+      - run: exit 0
+
   filteredMatrixJobStub:
     name: Filtered Matrix Job ${{ matrix.a }} - ${{ matrix.b }}
     needs: prFilter
