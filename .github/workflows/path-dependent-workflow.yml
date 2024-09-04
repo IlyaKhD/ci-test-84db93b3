@@ -4,8 +4,9 @@ on:
     branches: 
       - master
     paths:
-      - '**'
-      - '!**/*.md'
+      - '**/*.yml'
+    paths-ignore:
+      - '**/*'
 jobs:
 
   job1:
