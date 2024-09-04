@@ -5,8 +5,7 @@ on:
       - master
     paths:
       - '**/*.yml'
-    paths-ignore:
-      - '**/*'
+
 jobs:
 
   job1:
