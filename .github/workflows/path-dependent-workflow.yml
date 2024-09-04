@@ -1,9 +1,11 @@
 name: Path dependent workflow
 on:
   pull_request:
-    paths:
-      - '**'
-      - '!**/*.yml'
+    paths-ignore:
+      - '!**/*.yml'    
+    # paths:
+    #   - '**'
+    #   - '!**/*.yml'
       
 
 jobs:
