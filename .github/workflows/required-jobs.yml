@@ -8,11 +8,11 @@ jobs:
     name: 'required'
     runs-on: ubuntu-latest
     steps:
-      - run: exit 1
+      - run: exit 0
 
   required2:
     name: 'required'
     if:  1 == 2
     runs-on: ubuntu-latest
     steps:
-      - run: exit 1
+      - run: exit 0
