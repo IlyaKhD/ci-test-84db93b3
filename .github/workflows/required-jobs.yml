@@ -1,4 +1,4 @@
-name: PR
+name: Required Jobs
 on:
   pull_request:
 
