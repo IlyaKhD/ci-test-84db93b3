@@ -4,7 +4,7 @@ on:
     paths:
       - '**/*.yml'
     paths-ignore:
-      - '**/*'
+      - '!**/*.yml'
 
 jobs:
 
