@@ -1,0 +1,16 @@
+name: PR
+on:
+  pull_request:
+
+jobs:
+
+  required1:
+    runs-on: ubuntu-latest
+    steps:
+      - run: exit 0
+
+  required1:
+    if:  1 == 2
+    runs-on: ubuntu-latest
+    steps:
+      - run: exit 0
