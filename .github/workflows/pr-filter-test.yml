@@ -23,16 +23,19 @@ jobs:
         with:
           paths: '**;!**/*.yml'
 
-
-  filteredMatrixJob:
-    needs: prFilter
-    if: needs.prFilter.outputs.success == 'true'
+  required1:
+    name: 'required'
     runs-on: ubuntu-latest
-    continue-on-error: true
-    strategy:
-      matrix:
-        a: [ 'a', 'b' ]
-        b: [ 1, 2 ]
-
+    outputs:
+      success: ${{ steps.filter.outputs.result }}
     steps:
-      - run: echo ${{ matrix.a }} - ${{ matrix.b }}
+      - run: exit 0
+
+  required2:
+    name: 'required'
+    if: false
+    runs-on: ubuntu-latest
+    outputs:
+      success: ${{ steps.filter.outputs.result }}
+    steps:
+      - run: exit 1
