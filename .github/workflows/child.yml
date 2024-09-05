@@ -1,4 +1,4 @@
-name: PR Filter Stubs
+name: Child
 
 on:
   workflow_dispatch:
