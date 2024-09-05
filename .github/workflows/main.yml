@@ -1,0 +1,21 @@
+name: Main
+
+on:
+  pull_request:
+
+jobs:
+
+  trigger:
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Run Stubs Workflow
+        if: steps.filter.outputs.result != 'true'
+        run: gh workflow run child.yml
