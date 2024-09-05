@@ -23,18 +23,19 @@ jobs:
         with:
           paths: '**;!**/*.yml'
 
+  fail1:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "error message" >&2 && exit 1
 
   fail2:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/github-script@v7
         with:
-          script: |
-              core.setFailed('error message')
+          script: core.setFailed('error message')
 
   fail3:
     runs-on: ubuntu-latest
     steps:
-      - run: |
-        echo "::error::error message"
-        exit 1
+      - run: echo "::error::error message" && exit 1
