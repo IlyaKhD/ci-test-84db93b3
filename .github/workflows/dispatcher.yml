@@ -19,3 +19,5 @@ jobs:
       - name: Run Stubs Workflow
         if: steps.filter.outputs.result != 'true'
         run: gh workflow run child.yml --ref ${{ github.head_ref }}
+
+      - run: echo $(gh pr view 98 --json headRefName -q ".headRefName")
