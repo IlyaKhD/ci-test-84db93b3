@@ -39,4 +39,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: exit with error
-        run: echo '::error::Changes in apps/**/*.md shouldn't be mixed with changes in other files'
+        run: echo "::error::Changes in apps/**/*.md shouldn't be mixed with changes in other files"
