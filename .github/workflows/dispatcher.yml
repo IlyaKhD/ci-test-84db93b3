@@ -18,4 +18,4 @@ jobs:
 
       - name: Run Stubs Workflow
         if: steps.filter.outputs.result != 'true'
-        run: gh workflow run child.yml --ref {{ github.head_ref }}
+        run: gh workflow run child.yml
