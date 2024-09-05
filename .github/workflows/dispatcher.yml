@@ -11,8 +11,11 @@ jobs:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
 
-      - run: echo {{ github.head_ref }}
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
 
       - name: Run Stubs Workflow
         if: steps.filter.outputs.result != 'true'
-        run: gh workflow run child.yml
+        run: gh workflow run child.yml --ref ${{ github.head_ref }}
