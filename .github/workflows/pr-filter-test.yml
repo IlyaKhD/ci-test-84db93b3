@@ -26,8 +26,16 @@ jobs:
 
   filteredJob:
     needs: prFilter
-    if: needs.prFilter.outputs.success == 'true'
+    if: needs.prFilter.outputs.success != 'true'
     runs-on: ubuntu-latest
 
     steps:
-      - run: echo 123
+      - run: exit 0
+
+  filteredStubJob:
+    name: 'required'
+    needs: [ filteredJob ]
+    if: false
+    runs-on: ubuntu-latest
+    steps:
+      - run: exit 1
