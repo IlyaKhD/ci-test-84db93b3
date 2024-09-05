@@ -24,22 +24,15 @@ jobs:
           paths: '**;!**/*.yml'
 
 
-  filteredJob:
+  filteredMatrixJob:
     needs: prFilter
-    if: needs.prFilter.outputs.success != 'true'
-    runs-on: ubuntu-latest
-    timeout-minutes: 1
-    steps:
-      - run: |
-          while true; do
-            echo "This job is still running..."
-            sleep 60  # Wait for 60 seconds before printing the message again
-          done
-
-  filteredStubJob:
-    name: 'required'
-    needs: [ filteredJob ]
     if: needs.prFilter.outputs.success == 'true'
     runs-on: ubuntu-latest
+    continue-on-error: true
+    strategy:
+      matrix:
+        a: [ 'a', 'b' ]
+        b: [ 1, 2 ]
+
     steps:
-      - run: exit 1
+      - run: echo ${{ matrix.a }} - ${{ matrix.b }}
