@@ -31,9 +31,10 @@ jobs:
   fail2:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/github-script@v7
+      - name: Exit with error
+        uses: actions/github-script@v7
         with:
-          script: core.setFailed('error message')
+          script: core.setFailed('Changes in apps/**/*.md shouldn\'t be mixed with changes in other files')
 
   fail3:
     runs-on: ubuntu-latest
