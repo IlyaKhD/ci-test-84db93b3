@@ -27,7 +27,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: |
-        echo "error message" >&2
+        echo "error message"
         exit 1
 
   fail2:
