@@ -39,7 +39,7 @@ jobs:
   filteredStubJob:
     name: 'required'
     needs: [ filteredJob ]
-    if: false
+    if: needs.prFilter.outputs.success == 'true'
     runs-on: ubuntu-latest
     steps:
       - run: exit 1
