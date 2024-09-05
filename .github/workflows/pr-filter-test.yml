@@ -23,12 +23,6 @@ jobs:
         with:
           paths: '**;!**/*.yml'
 
-  fail1:
-    runs-on: ubuntu-latest
-    steps:
-      - run: |
-        echo "error message"
-        exit 1
 
   fail2:
     runs-on: ubuntu-latest
