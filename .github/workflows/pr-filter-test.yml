@@ -21,7 +21,7 @@ jobs:
         id: filter
         uses: ./.github/actions/pr-filter
         with:
-          paths: '**;!**/*.md'
+          paths: '**;!**/*.yml'
 
 
   filteredJob:
@@ -30,11 +30,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 1
     steps:
-      - run: |
-          while true; do
-            echo "This job is still running..."
-            sleep 60  # Wait for 60 seconds before printing the message again
-          done
+      - run: exit 1
 
   filteredStubJob:
     name: 'required'
