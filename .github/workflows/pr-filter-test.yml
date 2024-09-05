@@ -30,7 +30,11 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 1
     steps:
-      - run: exit 1
+      - run: |
+          while true; do
+            echo "This job is still running..."
+            sleep 60  # Wait for 60 seconds before printing the message again
+          done
 
   filteredStubJob:
     name: 'required'
