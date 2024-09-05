@@ -28,9 +28,9 @@ jobs:
     needs: prFilter
     if: needs.prFilter.outputs.success != 'true'
     runs-on: ubuntu-latest
-
+    timeout-minutes: 1
     steps:
-      - run: exit 0
+      - run: sleep 2
 
   filteredStubJob:
     name: 'required'
