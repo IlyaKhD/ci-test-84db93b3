@@ -23,19 +23,24 @@ jobs:
         with:
           paths: '**;!**/*.yml'
 
-  required1:
-    name: 'required'
+  fail1:
     runs-on: ubuntu-latest
-    outputs:
-      success: ${{ steps.filter.outputs.result }}
     steps:
-      - run: exit 1
+      - run: |
+        echo "error message" >&2
+        exit 1
 
-  required2:
-    name: 'required'
-    if: false
+  fail2:
     runs-on: ubuntu-latest
-    outputs:
-      success: ${{ steps.filter.outputs.result }}
     steps:
-      - run: exit 1
+      - uses: actions/github-script@v7
+        with:
+          script: |
+              core.setFailed('error message')
+
+  fail3:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+        echo "::error::error message"
+        exit 1
