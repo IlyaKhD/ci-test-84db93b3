@@ -33642,13 +33642,9 @@
           try {
               const pathPatterns = core.getInput(common_1.inputs.PATHS).split(';');
               const token = core.getInput(common_1.inputs.GH_TOKEN, { required: true });
-              console.log('patterns: ' + JSON.stringify(pathPatterns, undefined, 2));
               const changedFiles = yield (0, common_1.getChangedFiles)(token);
               const filteredFiles = (0, common_1.filterPaths)(changedFiles, pathPatterns);
               core.setOutput(common_1.outputs.RESULT, filteredFiles.length > 0);
-              console.log(`${changedFiles.length} changed files: ${JSON.stringify(changedFiles, undefined, 2)}`);
-              console.log(`${filteredFiles.length} filtered files: ${JSON.stringify(filteredFiles, undefined, 2)}`);
-              core.info(`${changedFiles.length} changed files: ${JSON.stringify(changedFiles, undefined, 2)}`);
           }
           catch (error) {
               if (error instanceof Error) {
