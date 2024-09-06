@@ -80,12 +80,36 @@
   /***/ }),
   
   /***/ 3562:
-  /***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+  /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
   
   "use strict";
   
+  var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+      if (k2 === undefined) k2 = k;
+      var desc = Object.getOwnPropertyDescriptor(m, k);
+      if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+        desc = { enumerable: true, get: function() { return m[k]; } };
+      }
+      Object.defineProperty(o, k2, desc);
+  }) : (function(o, m, k, k2) {
+      if (k2 === undefined) k2 = k;
+      o[k2] = m[k];
+  }));
+  var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+      Object.defineProperty(o, "default", { enumerable: true, value: v });
+  }) : function(o, v) {
+      o["default"] = v;
+  });
+  var __importStar = (this && this.__importStar) || function (mod) {
+      if (mod && mod.__esModule) return mod;
+      var result = {};
+      if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+      __setModuleDefault(result, mod);
+      return result;
+  };
   Object.defineProperty(exports, "__esModule", ({ value: true }));
-  exports.filterPaths = void 0;
+  exports.filterPathsImpl = exports.filterPaths = void 0;
+  const core = __importStar(__nccwpck_require__(5316));
   const minimatch_1 = __nccwpck_require__(148);
   const NEGATION = '!';
   const matchOptions = {
@@ -95,6 +119,13 @@
       return (0, minimatch_1.minimatch)(path.replace(/\\/g, '/'), pattern, matchOptions);
   }
   function filterPaths(paths, patterns) {
+      core.debug('patterns: ' + JSON.stringify(patterns, undefined, 2));
+      const filteredPaths = filterPathsImpl(paths, patterns);
+      core.info(`${filteredPaths.length} filtered paths: ${JSON.stringify(filteredPaths, undefined, 2)}`);
+      return filteredPaths;
+  }
+  exports.filterPaths = filterPaths;
+  function filterPathsImpl(paths, patterns) {
       return paths.filter(path => {
           return patterns.reduce((prevResult, pattern) => {
               return pattern.startsWith(NEGATION)
@@ -103,7 +134,7 @@
           }, false);
       });
   }
-  exports.filterPaths = filterPaths;
+  exports.filterPathsImpl = filterPathsImpl;
   
   
   /***/ }),
@@ -146,13 +177,13 @@
       });
   };
   Object.defineProperty(exports, "__esModule", ({ value: true }));
-  exports.getChangedFiles = exports.getRange = exports.getPrRevisionRange = void 0;
+  exports.getChangedFiles = exports.getPrRevisionRange = void 0;
   const core = __importStar(__nccwpck_require__(5316));
   const github_1 = __nccwpck_require__(2189);
   const common_utils_1 = __nccwpck_require__(3120);
   function getPrRevisionRange() {
       return __awaiter(this, void 0, void 0, function* () {
-          return getRange().then((r) => {
+          return getPrRevisionRangeImpl().then((r) => {
               core.info(`Base commit: ${r.base}`);
               core.info(`Head commit: ${r.head}`);
               return r;
@@ -160,10 +191,7 @@
       });
   }
   exports.getPrRevisionRange = getPrRevisionRange;
-  function normalizeCommit(commit) {
-      return commit === '0000000000000000000000000000000000000000' ? 'HEAD^' : commit;
-  }
-  function getRange() {
+  function getPrRevisionRangeImpl() {
       var _a, _b, _c, _d;
       return __awaiter(this, void 0, void 0, function* () {
           switch (github_1.context.eventName) {
@@ -184,8 +212,19 @@
           }
       });
   }
-  exports.getRange = getRange;
+  function normalizeCommit(commit) {
+      return commit === '0000000000000000000000000000000000000000' ? 'HEAD^' : commit;
+  }
   function getChangedFiles(token) {
+      return __awaiter(this, void 0, void 0, function* () {
+          return getChangedFilesImpl(token).then((files) => {
+              core.info(`${files.length} changed files: ${JSON.stringify(files, undefined, 2)}`);
+              return files;
+          });
+      });
+  }
+  exports.getChangedFiles = getChangedFiles;
+  function getChangedFilesImpl(token) {
       return __awaiter(this, void 0, void 0, function* () {
           try {
               const octokit = (0, github_1.getOctokit)(token);
@@ -206,7 +245,6 @@
           }
       });
   }
-  exports.getChangedFiles = getChangedFiles;
   
   
   /***/ }),
