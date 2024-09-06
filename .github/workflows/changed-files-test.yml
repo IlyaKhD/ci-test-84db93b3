@@ -21,3 +21,9 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           paths: '**;!**/*.yml'
+
+      - name: Filter (old)
+        id: filter_old
+        uses: ./.github/actions/pr-filter-old
+        with:
+          paths: '**;!**/*.yml'
