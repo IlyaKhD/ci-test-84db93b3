@@ -19,4 +19,5 @@ jobs:
         id: filter
         uses: ./.github/actions/pr-filter
         with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           paths: '**;!**/*.yml'
