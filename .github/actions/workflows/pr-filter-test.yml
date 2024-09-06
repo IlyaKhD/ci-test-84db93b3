@@ -1,7 +1,5 @@
 name: PR Filter Test
 on:
-  push:
-    branches: master
   pull_request:
 
 jobs:
@@ -21,7 +19,7 @@ jobs:
         id: filter
         uses: ./.github/actions/pr-filter
         with:
-          paths: '**;!**/*.md'
+          paths: '**;!**/*.yml'
 
 
   filteredJob:
