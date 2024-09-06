@@ -1,7 +1,5 @@
 name: Changed Files Test
 on:
-  push:
-    branches: master
   pull_request:
 
 jobs:
@@ -11,3 +9,14 @@ jobs:
     outputs:
       success: ${{ steps.filter.outputs.result }}
     steps:
+
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Filter
+        id: filter
+        uses: ./.github/actions/pr-filter
+        with:
+          paths: '**;!**/*.yml'
