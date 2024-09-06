@@ -33610,7 +33610,7 @@
               core.setOutput(common_1.outputs.RESULT, filteredFiles.length > 0);
               console.log(`${changedFiles.length} changed files: ${JSON.stringify(changedFiles, undefined, 2)}`);
               console.log(`${filteredFiles.length} filtered files: ${JSON.stringify(filteredFiles, undefined, 2)}`);
-              core.setOutput('changed-files', changedFiles.join('\n'));
+              core.info(`${changedFiles.length} changed files: ${JSON.stringify(changedFiles, undefined, 2)}`);
           }
           catch (error) {
               if (error instanceof Error) {

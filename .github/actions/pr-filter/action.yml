@@ -3,7 +3,7 @@ description: Checks if PR meets certian criteria
 
 inputs:
 
-  github-token:
+  gh-token:
     description: GitHub access token (GITHUB_TOKEN)
     required: true
 
