@@ -31,7 +31,7 @@ jobs:
       - name: Get changed files
         uses: ./.github/actions/get-changed-files
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          gh-token: ${{ secrets.GITHUB_TOKEN }}
         with:
           paths: 'docs/**'
           output: docs/changed-files.json
