@@ -51,6 +51,23 @@
     
     /***/ }),
     
+    /***/ 8071:
+    /***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+    
+    "use strict";
+    
+    Object.defineProperty(exports, "__esModule", ({ value: true }));
+    exports.ensureDir = void 0;
+    const fs_1 = __nccwpck_require__(7147);
+    const path_1 = __nccwpck_require__(1017);
+    function ensureDir(path) {
+        (0, fs_1.mkdirSync)((0, path_1.dirname)(path), { recursive: true });
+    }
+    exports.ensureDir = ensureDir;
+    
+    
+    /***/ }),
+    
     /***/ 9145:
     /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
     
@@ -73,6 +90,7 @@
     Object.defineProperty(exports, "__esModule", ({ value: true }));
     __exportStar(__nccwpck_require__(3120), exports);
     __exportStar(__nccwpck_require__(1189), exports);
+    __exportStar(__nccwpck_require__(8071), exports);
     __exportStar(__nccwpck_require__(3562), exports);
     __exportStar(__nccwpck_require__(3400), exports);
     
@@ -508,6 +526,7 @@
                 console.log('patterns: ' + JSON.stringify(pathPatterns, undefined, 2));
                 const changedFiles = yield (0, common_1.getChangedFiles)(token);
                 const filteredFiles = (0, common_1.filterPaths)(changedFiles, pathPatterns);
+                (0, common_1.ensureDir)(output);
                 fs.writeFileSync(output, filteredFiles.join('\n'));
             }
             catch (error) {
