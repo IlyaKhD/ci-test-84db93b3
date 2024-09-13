@@ -1,0 +1,25 @@
+name: pr-filter
+description: Checks if PR meets certian criteria
+
+inputs:
+
+  gh-token:
+    description: GitHub access token (GITHUB_TOKEN)
+    required: true
+
+  paths:
+    description: Semicolon separated globs
+    required: false
+
+  output:
+    description: Output file path
+    required: true
+
+
+runs:
+  using: node16
+  main: dist/index.js
+
+outputs:
+  result:
+    description: true if all criteria met, otherwise false
