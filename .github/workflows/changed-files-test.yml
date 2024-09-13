@@ -27,3 +27,14 @@ jobs:
         uses: ./.github/actions/pr-filter-old
         with:
           paths: '**;!**/*.yml'
+
+      - name: Get changed files
+        uses: ./.github/actions/get-changed-files
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          paths: 'docs/**'
+          result: docs/changed-files.json
+
+      - name: Print changed files
+        run: cat docs/changed-files.json
