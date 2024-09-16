@@ -37,3 +37,7 @@ jobs:
 
       - name: Print changed files
         run: cat doc/changed-files.json
+
+      - name: Detect Bump
+        id: detection
+        uses: DevExpress/github-actions/verify-version-change@v2
