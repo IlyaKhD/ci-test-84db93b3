@@ -40,4 +40,4 @@ jobs:
 
       - name: Detect Bump
         id: detection
-        uses: DevExpress/github-actions/verify-version-change@v2
+        uses: DevExpress/github-actions/verify-version-change@v1
