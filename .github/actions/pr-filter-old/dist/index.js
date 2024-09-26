@@ -32,25 +32,6 @@
   
   /***/ }),
   
-  /***/ 1189:
-  /***/ ((__unused_webpack_module, exports) => {
-  
-  "use strict";
-  
-  Object.defineProperty(exports, "__esModule", ({ value: true }));
-  exports.outputs = exports.inputs = void 0;
-  exports.inputs = {
-      GH_TOKEN: 'gh-token',
-      OUTPUT: 'output',
-      PATHS: 'paths',
-  };
-  exports.outputs = {
-      RESULT: 'result',
-  };
-  
-  
-  /***/ }),
-  
   /***/ 9145:
   /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
   
@@ -72,7 +53,6 @@
   };
   Object.defineProperty(exports, "__esModule", ({ value: true }));
   __exportStar(__nccwpck_require__(3120), exports);
-  __exportStar(__nccwpck_require__(1189), exports);
   __exportStar(__nccwpck_require__(3562), exports);
   __exportStar(__nccwpck_require__(3400), exports);
   
@@ -80,36 +60,12 @@
   /***/ }),
   
   /***/ 3562:
-  /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
+  /***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
   
   "use strict";
   
-  var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-      if (k2 === undefined) k2 = k;
-      var desc = Object.getOwnPropertyDescriptor(m, k);
-      if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-        desc = { enumerable: true, get: function() { return m[k]; } };
-      }
-      Object.defineProperty(o, k2, desc);
-  }) : (function(o, m, k, k2) {
-      if (k2 === undefined) k2 = k;
-      o[k2] = m[k];
-  }));
-  var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-      Object.defineProperty(o, "default", { enumerable: true, value: v });
-  }) : function(o, v) {
-      o["default"] = v;
-  });
-  var __importStar = (this && this.__importStar) || function (mod) {
-      if (mod && mod.__esModule) return mod;
-      var result = {};
-      if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-      __setModuleDefault(result, mod);
-      return result;
-  };
   Object.defineProperty(exports, "__esModule", ({ value: true }));
-  exports.filterPathsImpl = exports.filterPaths = void 0;
-  const core = __importStar(__nccwpck_require__(5316));
+  exports.filterPaths = void 0;
   const minimatch_1 = __nccwpck_require__(148);
   const NEGATION = '!';
   const matchOptions = {
@@ -119,13 +75,6 @@
       return (0, minimatch_1.minimatch)(path.replace(/\\/g, '/'), pattern, matchOptions);
   }
   function filterPaths(paths, patterns) {
-      core.debug('patterns: ' + JSON.stringify(patterns, undefined, 2));
-      const filteredPaths = filterPathsImpl(paths, patterns);
-      core.info(`${filteredPaths.length} filtered paths: ${JSON.stringify(filteredPaths, undefined, 2)}`);
-      return filteredPaths;
-  }
-  exports.filterPaths = filterPaths;
-  function filterPathsImpl(paths, patterns) {
       return paths.filter(path => {
           return patterns.reduce((prevResult, pattern) => {
               return pattern.startsWith(NEGATION)
@@ -134,7 +83,7 @@
           }, false);
       });
   }
-  exports.filterPathsImpl = filterPathsImpl;
+  exports.filterPaths = filterPaths;
   
   
   /***/ }),
@@ -177,13 +126,13 @@
       });
   };
   Object.defineProperty(exports, "__esModule", ({ value: true }));
-  exports.getChangedFiles = exports.getPrRevisionRange = void 0;
+  exports.getRange = exports.getPrRevisionRange = void 0;
   const core = __importStar(__nccwpck_require__(5316));
   const github_1 = __nccwpck_require__(2189);
   const common_utils_1 = __nccwpck_require__(3120);
   function getPrRevisionRange() {
       return __awaiter(this, void 0, void 0, function* () {
-          return getPrRevisionRangeImpl().then((r) => {
+          return getRange().then((r) => {
               core.info(`Base commit: ${r.base}`);
               core.info(`Head commit: ${r.head}`);
               return r;
@@ -191,7 +140,10 @@
       });
   }
   exports.getPrRevisionRange = getPrRevisionRange;
-  function getPrRevisionRangeImpl() {
+  function normalizeCommit(commit) {
+      return commit === '0000000000000000000000000000000000000000' ? 'HEAD^' : commit;
+  }
+  function getRange() {
       var _a, _b, _c, _d;
       return __awaiter(this, void 0, void 0, function* () {
           switch (github_1.context.eventName) {
@@ -212,39 +164,7 @@
           }
       });
   }
-  function normalizeCommit(commit) {
-      return commit === '0000000000000000000000000000000000000000' ? 'HEAD^' : commit;
-  }
-  function getChangedFiles(token) {
-      return __awaiter(this, void 0, void 0, function* () {
-          return getChangedFilesImpl(token).then((files) => {
-              core.info(`${files.length} changed files: ${JSON.stringify(files, undefined, 2)}`);
-              return files;
-          });
-      });
-  }
-  exports.getChangedFiles = getChangedFiles;
-  function getChangedFilesImpl(token) {
-      return __awaiter(this, void 0, void 0, function* () {
-          try {
-              const octokit = (0, github_1.getOctokit)(token);
-              if (github_1.context.payload.pull_request == null) {
-                  core.setFailed('This action only works on pull request events.');
-                  return [];
-              }
-              const files = yield octokit.paginate(octokit.rest.pulls.listFiles, {
-                  owner: github_1.context.repo.owner,
-                  repo: github_1.context.repo.repo,
-                  pull_number: github_1.context.payload.pull_request.number,
-              });
-              return files.map(file => file.filename);
-          }
-          catch (error) {
-              core.setFailed(`Action failed with error: ${error}`);
-              return [];
-          }
-      });
-  }
+  exports.getRange = getRange;
   
   
   /***/ }),
@@ -33637,14 +33557,22 @@
   Object.defineProperty(exports, "__esModule", ({ value: true }));
   const core = __importStar(__nccwpck_require__(5316));
   const common_1 = __nccwpck_require__(9145);
+  const INPUT_PATHS = 'paths';
+  const OUTPUT_RESULT = 'result';
   function run() {
       return __awaiter(this, void 0, void 0, function* () {
           try {
-              const pathPatterns = core.getInput(common_1.inputs.PATHS).split(';');
-              const token = core.getInput(common_1.inputs.GH_TOKEN, { required: true });
-              const changedFiles = yield (0, common_1.getChangedFiles)(token);
+              const pathPatterns = core.getInput(INPUT_PATHS).split(';');
+              console.log(JSON.stringify(pathPatterns, undefined, 4));
+              const { head, base } = yield (0, common_1.getPrRevisionRange)();
+              const diffOutput = yield (0, common_1.execCommand)(`git diff --name-only ${base} ${head}`);
+              const changedFiles = diffOutput.split('\n');
               const filteredFiles = (0, common_1.filterPaths)(changedFiles, pathPatterns);
-              core.setOutput(common_1.outputs.RESULT, filteredFiles.length > 0);
+              core.setOutput(OUTPUT_RESULT, filteredFiles.length > 0);
+              console.log(`changed files [${changedFiles.length}]:`);
+              console.log(JSON.stringify(changedFiles, undefined, 4));
+              console.log(`filtered files [${filteredFiles.length}]:`);
+              console.log(JSON.stringify(filteredFiles, undefined, 4));
           }
           catch (error) {
               if (error instanceof Error) {
