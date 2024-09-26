@@ -38,6 +38,13 @@ jobs:
       - name: Print changed files
         run: cat doc/changed-files.json
 
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: changed-demos
+          path: doc/changed-files.json
+          retention-days: 10
+
       - name: Detect Bump
         id: detection
         uses: DevExpress/github-actions/verify-version-change@v1
