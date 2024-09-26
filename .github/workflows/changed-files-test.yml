@@ -32,7 +32,7 @@ jobs:
         uses: ./.github/actions/get-changed-files
         with:
           gh-token: ${{ secrets.GITHUB_TOKEN }}
-          paths: 'doc/**'
+          paths: 'doc/**/*.js'
           output: doc/changed-files.json
 
       - name: Print changed files
