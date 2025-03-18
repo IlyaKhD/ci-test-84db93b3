@@ -37,7 +37,7 @@ jobs:
 
     - name: Print files
       run: |
-        for file in "${{ fromJSON(steps.changed-files.outputs.files) }} | jq -r '[]' "; do
+        for file in "${{ steps.changed-files.outputs.files }} | jq -r '[]' "; do
           echo "$file"
         done
 
