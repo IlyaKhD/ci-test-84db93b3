@@ -1,6 +1,7 @@
 name: Common Tests
 
 on:
+  push:
   workflow_dispatch:
 
 jobs:
@@ -9,15 +10,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Get sources
-      uses: actions/checkout@v4
-      with:
-        sparse-checkout: |
-          /scripts
-          package.json
-        sparse-checkout-cone-mode: false
-    - run: npm i
-    - name: step1
-      env:
-        E1: ${{ github.repository_owner }}
-      run: npm run ts-node scripts/script1;
+
+    - name: Get changed files
+      id: verify-changed-files
+      uses: tj-actions/verify-changed-files@v16
+
+    - name: Echo
+      run: |
+        echo "${{ steps.verify-changed-files.outputs.changed_files }}"
