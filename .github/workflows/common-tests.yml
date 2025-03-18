@@ -35,7 +35,13 @@ jobs:
         paths: '**/*'
         output: changed-files.json
 
-    - name: Print files
+    - name: Print files 1
+      run: |
+        for file in ${{ steps.changed-files.outputs.json }}; do
+          echo "$file"
+        done
+
+    - name: Print files 2
       run: |
         for file in $( jq -r '.files.[]' <<< '${{ steps.changed-files.outputs.json }}' ); do
           echo "$file"
