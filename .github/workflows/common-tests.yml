@@ -44,6 +44,12 @@ jobs:
     - name: Print count
       run: |
         echo "${{ steps.changed-files.outputs.count }}"
+
+    - name: Print count
+      if: steps.changed-files.outputs.count == 2
+      run: |
+        echo "${{ steps.changed-files.outputs.count }}"
+
           
     - name: Print file
       run: |
