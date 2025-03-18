@@ -34,9 +34,17 @@ jobs:
         gh-token: ${{ secrets.GITHUB_TOKEN }}
         paths: '**/*'
         output: changed-files.json
-          
-    - name: Print
+
+    - name: Print files
       run: |
-        echo "${{ steps.changed-files.outputs.files }}"
+        for file in "${{ steps.changed-files.outputs.files }}"; do
+          echo "$file"
+        done
+
+    - name: Print count
+      run: |
         echo "${{ steps.changed-files.outputs.count }}"
+          
+    - name: Print file
+      run: |
         cat changed-files.json
