@@ -71,7 +71,7 @@ jobs:
 
     - name: Save file
       run: |
-        jq -r '[.files | { filename: . }]' <<< '${{ steps.changed-files.outputs.json }}' > changed-files-2.json
+        jq -r '.files | map({filename: .})' <<< '${{ steps.changed-files.outputs.json }}' > changed-files-2.json
 
     - name: Print file 2
       run: |
