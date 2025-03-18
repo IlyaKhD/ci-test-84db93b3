@@ -45,11 +45,15 @@ jobs:
       run: |
         echo "${{ steps.changed-files.outputs.count }}"
 
-    - name: Print count
+    - name: Check count 1
       if: steps.changed-files.outputs.count > 2
       run: |
         echo "${{ steps.changed-files.outputs.count }}"
 
+    - name: Check count 2
+      if: fromJSON(steps.changed-files.outputs.json).count > 2
+      run: |
+        echo "${{ fromJSON(steps.changed-files.outputs.json).count }}"
           
     - name: Print file
       run: |
