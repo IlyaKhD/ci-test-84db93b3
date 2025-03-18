@@ -29,7 +29,7 @@ jobs:
 
     - name: Get changed files
       id: changed-files
-      uses: IlyaKhD/github-actions/get-changed-files@main
+      uses: IlyaKhD/github-actions/get-changed-files@khd/fix-empty-paths-case
       with:
         gh-token: ${{ secrets.GITHUB_TOKEN }}
         paths: '**/*'
