@@ -52,8 +52,10 @@ jobs:
         echo "${{ steps.changed-files.outputs.count }}"
 
     - name: Print count 2
+      env:
+        COUNT: ${{ fromJSON(steps.changed-files.outputs.json).count }}
       run: |
-        echo $(jq -r '.count' <<< '${{ steps.changed-files.outputs.json }}')
+        echo "$COUNT"
 
     - name: Check count 1
       if: steps.changed-files.outputs.count > 2
