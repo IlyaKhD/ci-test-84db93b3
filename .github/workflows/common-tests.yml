@@ -11,6 +11,9 @@ jobs:
 
     steps:
 
+    - name: Get sources
+      uses: actions/checkout@v4
+
     - name: Get changed files
       id: verify-changed-files
       uses: tj-actions/verify-changed-files@v16
