@@ -66,19 +66,15 @@ jobs:
       if: fromJSON(steps.changed-files.outputs.json).count > 2
       run: |
         echo "${{ fromJSON(steps.changed-files.outputs.json).count }}"
-          
-    - name: Print file 1
+
+    - name: Print JSON
       run: |
-        cat changed-files.json
+        jq -r <<< '${{ steps.changed-files.outputs.json }}'
 
     - name: Save file
       run: |
         jq -r '[.files[] | {filename: .path}]' <<< '${{ steps.changed-files.outputs.json }}' > changed-files-2.json
 
-    - name: Print file 2
+    - name: Print file
       run: |
         cat changed-files-2.json
-
-    - name: Print JSON
-      run: |
-        jq -r <<< '${{ steps.changed-files.outputs.json }}'
