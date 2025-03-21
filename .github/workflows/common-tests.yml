@@ -32,8 +32,6 @@ jobs:
       uses: IlyaKhD/github-actions/get-changed-files@khd/fix-empty-paths-case
       with:
         gh-token: ${{ secrets.GITHUB_TOKEN }}
-        paths: '**/*'
-        output: changed-files.json
 
     - name: Print files 1
       run: |
