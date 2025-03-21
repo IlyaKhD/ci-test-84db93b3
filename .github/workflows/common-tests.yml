@@ -81,4 +81,4 @@ jobs:
 
     - name: Print list of all files except removed
       run: |
-        jq -r '.files[] | select(.status != "added") | .path' <<< '${{ steps.changed-files.outputs.json }}'
+        jq -r '.files[] | select(.status != "removed") | .path' <<< '${{ steps.changed-files.outputs.json }}'
