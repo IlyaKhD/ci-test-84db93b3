@@ -1,6 +1,16 @@
 name: get-uncommitted-changes
 description: "Stages all changes, lists files, unstages all changes"
 
+outputs:
+
+  files:
+    description: "Space-separated list of changed files, paths are quoted"
+    value: ${{ steps.git.outputs.files }}
+
+  count:
+    description: "Count of changed files"
+    value: ${{ steps.git.outputs.count }}
+
 runs:
   using: "composite"
   steps:
