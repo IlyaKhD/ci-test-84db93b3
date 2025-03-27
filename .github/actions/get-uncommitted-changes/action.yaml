@@ -4,7 +4,7 @@ description: "Stages all changes, lists files, unstages all changes"
 runs:
   using: "composite"
   steps:
-    - name Execute git script
+    - name: Execute git script
       shell: bash
       run: |
         git add --all
