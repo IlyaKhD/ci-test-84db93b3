@@ -1,0 +1,25 @@
+name: get-uncommitted-changes
+description: "Stages all changes, lists files, unstages all changes"
+
+outputs:
+
+  files:
+    description: "Space-separated list of changed files, paths are quoted"
+    value: ${{ steps.git.outputs.files }}
+
+  count:
+    description: "Count of changed files"
+    value: ${{ steps.git.outputs.count }}
+
+runs:
+  using: "composite"
+  steps:
+    - name: Execute git script
+      id: git
+      shell: bash
+      run: |
+        git add --all
+        changes=$(git diff --staged --name-only)
+        echo "files=$(for file in $(echo $changes); do echo "'$file' "; done | tr '\n' ' ')" >> $GITHUB_OUTPUT
+        echo "count=$(wc -l <<< $changes | xargs)" >> $GITHUB_OUTPUT
+        git reset .

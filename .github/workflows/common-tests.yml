@@ -12,22 +12,22 @@ jobs:
 
     - name: Get sources
       uses: actions/checkout@v4
-
-    # - name: Get changed files
-    #   id: changed-files
-    #   uses: tj-actions/verify-changed-files@v20
-    #   with:
-    #     files: |
-    #       **/*
-
-    - name: Get changed files
-      id: changed-files
-      uses: DevExpress/github-actions/get-changed-files@v1
-      with:
-        gh-token: ${{ secrets.GITHUB_TOKEN }}
-        paths: '**/*'
-        output: changed-files.json
-          
-    - name: Echo
+    
+    - name: Make changes
       run: |
-        cat changed-files.json
+        rm -f feature-2.ts
+        mv feature-3.ts feature-renamed.ts
+        touch new-file.txt
+        echo "\nchanges" >> README.md
+
+
+    - name: Get Uncommitted Changes
+      id: uncommittedChanges
+      uses: ./.github/actions/get-uncommitted-changes
+
+    - name: Print
+      run: |
+        echo "Uncommited files count: ${{ steps.uncommittedChanges.outputs.count }}"
+        for file in ${{ steps.uncommittedChanges.outputs.files }}; do
+          echo "$file"
+        done
