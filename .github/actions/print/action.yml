@@ -1,0 +1,11 @@
+name: Detect Version Bump
+inputs:
+  text:
+    required: true
+
+runs:
+  using: composite
+  steps:
+
+    - shell: bash
+      run: echo "${{ inputs.who-to-greet }}"
