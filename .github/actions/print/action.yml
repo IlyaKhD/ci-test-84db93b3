@@ -8,4 +8,4 @@ runs:
   steps:
 
     - shell: bash
-      run: echo "${{ inputs.who-to-greet }}"
+      run: echo "${{ inputs.text }}"
