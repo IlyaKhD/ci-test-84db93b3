@@ -1,4 +1,4 @@
-name: Detect Version Bump
+name: Print
 inputs:
   text:
     required: true
